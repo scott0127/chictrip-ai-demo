@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="旅伴組隊省：從一份東京行程，到整團 eSIM 訂單。可離線使用的互動概念原型。">
+  <title>旅伴組隊省 · Group Trip Deal</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="trip-map.css">
+  <link rel="stylesheet" href="commerce.css">
+  <link rel="stylesheet" href="ideas.css">
+  <script src="assets/tokyo-map-data.js" defer></script>
+  <script src="trip-map.js" defer></script>
+  <script src="commerce.js" defer></script>
+  <script src="ideas.js" defer></script>
+  <script src="script.js" defer></script>
+<script src="phone-entry.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="site-header">
+    <a class="brand" href="#overview" aria-label="chicTrip 旅伴組隊省首頁">chicTrip<span>去趣</span></a>
+    <div class="header-divider"></div>
+    <span class="project-label">eSIM IDEAS</span>
+    <nav class="main-nav" aria-label="展示頁面">
+      <a href="#overview"><span>01</span> 概念</a>
+      <a href="#demo"><span>02</span> 點子 Demo</a>
+      <a href="#flow"><span>03</span> 轉換流程</a>
+      <a href="#business"><span>04</span> 商業模式</a>
+      <a href="#winwin"><span>05</span> 雙方收益</a>
+      <a href="#smart-deal" class="more-idea-link"><span>06</span> 買剛剛好</a>
+      <a href="#data-back"><span>07</span> 流量變旅金</a>
+      <a href="#social-trip"><span>08</span> 靈感成行</a>
+    </nav>
+    <span class="prototype-tag">概念提案</span>
+  </header>
+
+  <main id="main">
+    <section id="overview" class="page overview-page" aria-labelledby="overview-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="tiny-line"></span> GROUP TRIP DEAL</div>
+        <p class="hero-kicker">旅伴組隊省</p>
+        <h1 id="overview-title" tabindex="-1">一個人規劃，<br>整團<span class="accent">一起省。</span></h1>
+        <p class="hero-description">1 個人規劃旅行，<br>帶來整團 eSIM 訂單與新用戶。</p>
+        <div class="hero-actions"><a class="button primary" href="#demo">體驗組隊過程 <span aria-hidden="true">↗</span></a><a class="text-link" href="#business">看商業模式 <span aria-hidden="true">→</span></a></div>
+        <div class="hero-proof"><span>同一趟旅行</span><span class="proof-line"></span><strong>一起規劃 · 一起買 · 一起省</strong></div>
+      </div>
+      <div class="hero-visual">
+        <div class="trip-ticket">
+          <div class="ticket-top"><span>OUR NEXT ADVENTURE</span><span class="pill">4 人同行</span></div>
+          <div class="ticket-destination"><div><span class="destination-small">JAPAN / 日本</span><h2>Tokyo<span>東京</span></h2></div><div class="ticket-days"><strong>5</strong><span>DAYS</span></div></div>
+          <div class="ticket-meta"><span>10.12 — 10.16</span><span>Scott 的東京 5 日遊</span></div>
+          <div class="mini-itinerary"><div><small>DAY 01</small><strong>淺草</strong></div><div><small>DAY 02</small><strong>澀谷</strong></div><div><small>DAY 03</small><strong>迪士尼</strong></div><div><small>DAY 04</small><strong>新宿</strong></div><div><small>DAY 05</small><strong>上野</strong></div></div>
+          <div class="ticket-crew"><div class="avatar-stack"><span class="avatar solid hero-avatar">S</span><span class="avatar hero-avatar">Y</span><span class="avatar hero-avatar">W</span><span class="avatar hero-avatar">A</span></div><div><strong>Scott、Yuki、小文、阿哲</strong><span>旅伴到齊，美好旅程開始。</span></div></div>
+          <div class="ticket-perk"><span class="check-circle" aria-hidden="true">✓</span><div><strong>4 人購買，解鎖旅伴價</strong><span>把原本就要買的網路，一起買更划算。</span></div></div>
+        </div>
+        <div class="hero-results"><div><span>一份行程</span><strong><b data-count="4">0</b><small>張 eSIM</small></strong></div><span class="result-divider"></span><div><span>帶來更多旅伴</span><strong>+<b data-count="3">0</b><small>位新用戶</small></strong></div><span class="small-label">模擬成果<br>全員購買情境</span></div>
+      </div>
+    </section>
+
+    <section id="demo" class="page map-demo-page" aria-labelledby="demo-title" hidden>
+      <div class="page-heading"><div><div class="eyebrow">02 / PRODUCT DEMO</div><h1 id="demo-title" tabindex="-1">一起排行程，<span class="accent">順手把網路也搞定。</span></h1><p>點節點，看熱門看點與預估用量。朋友自由共編，想買網路的人再一起省。</p></div><button class="button secondary compact" id="reset-demo">↺ 重新體驗</button></div>
+      <div class="demo-grid">
+        <article class="itinerary-card panel trip-workspace">
+          <div class="app-mini-header"><span class="mini-brand">chicTrip</span><span>我的行程 <span aria-hidden="true">/</span> 東京</span><span class="small-label">行程操作參考去趣公開教學</span></div>
+          <div class="workspace-heading">
+            <div><span class="trip-dates">2026.10.12 — 10.16 · 日本</span><h2>Tokyo 5 Days</h2><p>Scott 的東京 5 日遊</p></div>
+            <div class="workspace-crew"><div class="demo-avatars" id="coedit-avatars"></div><span>共編 <strong id="member-count">1</strong> 人</span><button class="button primary compact" id="invite-from-trip">＋ 邀請共編</button></div>
+          </div>
+
+          <details class="esim-offer" id="esim-offer">
+            <summary><span class="offer-sim" aria-hidden="true">eSIM</span><span class="offer-copy"><strong>網路一起買，旅費多省一點。</strong><span>2 人送流量 · 3 人送旅金 · 4 人享旅伴價</span></span><span class="offer-count" id="offer-count">0 人已購</span><span class="offer-expand"><span class="offer-open-label">看看福利</span><span aria-hidden="true">⌄</span></span></summary>
+            <div class="offer-body">
+              <div class="offer-benefits"><div class="offer-section-label"><strong>旅伴組隊省</strong><span>日本 5 日 eSIM · 提案模擬</span></div><p id="progress-label">第 2 位購買，就有第一份福利。</p><div class="purchase-progress" role="progressbar" aria-label="eSIM 購買人數，4 人解鎖最高福利" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div id="deal-progress-fill"></div></div><div class="offer-tiers"><div class="reward" data-level="2"><span class="reward-step">2 人買</span><strong>每人 +500MB</strong><span class="reward-state">待解鎖</span></div><div class="reward" data-level="3"><span class="reward-step">3 人買</span><strong>每人 30 chicCoin</strong><span class="reward-state">待解鎖</span></div><div class="reward" data-level="4"><span class="reward-step">4 人買</span><strong>購買者享旅伴價</strong><span class="reward-state">待解鎖</span></div></div><div id="deal-status" class="deal-status" role="status"></div><p class="offer-rules">共編不限 4 人，也不需要購買。只有同團有效 eSIM 訂單累計福利；達標後，已購旅伴也會升級。每人限計 1 筆，撤銷訂單會重新計算。</p></div>
+              <div class="offer-members"><div class="offer-section-label"><strong>誰想一起買？</strong><span id="purchase-summary">0 人購買 / 1 人共編</span></div><div id="purchase-members"></div><p class="offer-rules">點「模擬購買」體驗解鎖，不會付款或建立真實訂單。優惠回補、旅金價值與供應條件均為提案假設。</p><div class="offer-next-ideas"><a href="#smart-deal">不知道買多少？試試買剛剛好 →</a></div></div>
+            </div>
+          </details>
+          <div class="day-tabs trip-day-tabs" role="tablist" aria-label="每日行程"><button role="tab" aria-selected="false" aria-controls="day-plan" id="day-tab-all" data-day="-1" tabindex="-1">總覽<small>5 天行程</small></button><button class="active" role="tab" aria-selected="true" aria-controls="day-plan" id="day-tab-0" data-day="0">第1天<small>10/12 週一</small></button><button role="tab" aria-selected="false" aria-controls="day-plan" id="day-tab-1" data-day="1" tabindex="-1">第2天<small>10/13 週二</small></button><button role="tab" aria-selected="false" aria-controls="day-plan" id="day-tab-2" data-day="2" tabindex="-1">第3天<small>10/14 週三</small></button><button role="tab" aria-selected="false" aria-controls="day-plan" id="day-tab-3" data-day="3" tabindex="-1">第4天<small>10/15 週四</small></button><button role="tab" aria-selected="false" aria-controls="day-plan" id="day-tab-4" data-day="4" tabindex="-1">第5天<small>10/16 週五</small></button></div>
+          <div class="workspace-toolbar"><div><span class="note-dot"></span><strong id="day-area">淺草・晴空塔</strong><span id="day-summary">3 個景點</span></div><button class="map-text-button" id="toggle-map-view" aria-pressed="false">查看地圖 ↗</button></div>
+          <div id="day-legend" class="day-legend" aria-label="每日路線顏色"></div>
+          <div class="route-workspace">
+            <div class="journey-list"><div class="journey-list-title"><span>當日行程</span><button id="toggle-order" class="map-text-button" aria-pressed="false">調整順序</button></div><div id="day-plan" role="tabpanel" aria-labelledby="day-tab-0" tabindex="0"></div><p class="journey-list-note" id="order-note">點選景點，地圖同步定位。</p></div>
+            <div class="map-column"><div class="map-scene"><div id="trip-map" class="route-map" role="region" aria-label="東京行程互動地圖" tabindex="0"><svg id="map-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g id="map-base"></g><g id="map-routes"></g></svg><div id="map-labels" aria-hidden="true"></div><div id="map-pins"></div><div id="map-traveler" hidden><span></span></div><div class="map-heading"><span class="map-location-dot"></span><strong id="map-area">ASAKUSA / TOKYO</strong><span>離線地圖</span></div><div class="map-zoom"><button id="zoom-in" aria-label="放大地圖">＋</button><button id="zoom-out" aria-label="縮小地圖">−</button><button id="fit-map" aria-label="顯示完整行程">⌖</button></div><div class="map-source"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></div><div id="map-unavailable" hidden>地圖資料未載入，請保留 assets 資料夾。</div></div><aside class="insight-dock" aria-label="景點照片與看點"><div id="insight-empty" class="insight-empty"><span aria-hidden="true">↗</span><strong>下一站，想看哪裡？</strong><p>點選景點，看看實景照片、<br>熱門看點與預估用量。</p><small>15 個景點 · 東京 5 日</small></div><article id="stop-insight" class="stop-insight" aria-label="目前景點看點與預估用量" aria-live="polite" hidden></article></aside></div>
+              <div class="journey-playback"><div class="playback-heading"><span class="simulation-label">旅程模擬</span><span id="journey-status" role="status">目前：淺草寺 · 1 / 3</span><div class="playback-actions"><button id="play-journey" aria-label="播放旅程">▷ 播放旅程</button><button id="next-stop" aria-label="前往下一站">下一站 →</button></div></div><div id="journey-progress" class="journey-progress"></div><p class="map-note">實際地理底圖與景點座標；節點連線、移動時間為示範，非導航路線。</p></div>
+            </div>
+          </div>
+          <div class="coedit-status" role="status" id="coedit-status"><span class="mini-avatar">S</span>Scott 正在規劃行程。邀請旅伴一起加景點吧。</div>
+        </article>
+
+      </div>
+      <dialog id="invite-dialog" aria-labelledby="invite-title"><form method="dialog"><button class="dialog-close" aria-label="關閉共編邀請">×</button></form><span class="eyebrow">共同編輯</span><h2 id="invite-title">邀請旅伴，一起規劃。</h2><p class="invite-description">朋友都能加入一起排。不買 eSIM，也能完整共編。</p><div class="invite-trip-card"><div><strong>Tokyo 5 Days</strong><span>10.12 — 10.16 · Scott 發起</span></div><span class="pill">可共同編輯</span></div><div class="invite-person"><span id="invite-avatar" class="avatar">Y</span><div><label for="invite-name">旅伴暱稱</label><input id="invite-name" type="text" value="Yuki" maxlength="20" autocomplete="off"><span>受邀旅伴 · 等待接受邀請</span></div></div><button class="button primary full-width" id="accept-invite">模擬 Yuki 接受邀請 <span aria-hidden="true">→</span></button><p class="invite-disclaimer">這是共編接受流程的展示，不會傳送真實邀請。</p></dialog>
+    </section>
+
+
+    <section id="flow" class="page" aria-labelledby="flow-title" hidden>
+      <div class="page-heading"><div><div class="eyebrow">03 / CONVERSION FLOW</div><h1 id="flow-title" tabindex="-1">一份行程，<span class="accent">帶來一整團。</span></h1><p>從規劃到購買，讓同行邀請自然成為新用戶的入口。</p></div><span class="pill neutral">Tokyo 5 Days · 4 位旅伴</span></div>
+      <div class="flow-surface panel">
+        <div class="flow-top"><span class="eyebrow">THE JOURNEY TO CONVERSION</span><span id="flow-counter">00 / 05</span></div>
+        <ol class="flow-nodes">
+          <li><span class="node-number">01</span><div class="node-art"><span class="mini-document"><i></i><i></i><i></i></span></div><h2>建立行程</h2><p>Scott 規劃東京 5 日遊</p><span class="node-result">1 位發起人</span></li>
+          <li><span class="node-number">02</span><div class="node-art node-people"><i>S</i><i>Y</i><i>W</i><i>A</i></div><h2>邀旅伴</h2><p>分享同一份旅行計畫</p><span class="node-result">旅伴 1 → 4 人</span></li>
+          <li><span class="node-number">03</span><div class="node-art"><span class="edit-lines"><i></i><i></i><i></i><b>＋</b></span></div><h2>共編</h2><p>一起加景點、看行程</p><span class="node-result">建立共同使用情境</span></li>
+          <li><span class="node-number">04</span><div class="node-art"><span class="sim-shape">eSIM</span></div><h2>自選購買 eSIM</h2><p>依購買人數解鎖福利</p><span class="node-result">示例：4 人買 → 4 張訂單</span></li>
+          <li><span class="node-number">05</span><div class="node-art"><strong class="plus-three">+3</strong></div><h2>新增 App 使用者</h2><p>旅伴成為去趣新用戶</p><span class="node-result">共同旅程延續使用</span></li>
+        </ol>
+        <div class="flow-insight" role="status" id="flow-insight">準備好，從 Scott 的一份行程開始。</div>
+      </div>
+      <div class="section-bottom"><div class="button-group"><button class="button primary" id="play-flow">播放流程 <span aria-hidden="true">▷</span></button><button class="button secondary" id="next-flow">下一步 <span aria-hidden="true">→</span></button></div><p class="footnote">示範假設：3 位受邀旅伴原本皆非去趣用戶。新增用戶於加入時產生，末步彙總成效。</p></div>
+    </section>
+
+    <section id="business" class="page" aria-labelledby="business-title" hidden>
+      <div class="page-heading"><div><div class="eyebrow">04 / BUSINESS MODEL <span class="mock-badge">MOCK DATA</span></div><h1 id="business-title" tabindex="-1">每張少賺一點，<span class="accent">每趟賺得更多。</span></h1><p>把衡量單位從「一張訂單」，換成「一整趟旅行」。</p></div><button class="button secondary compact" id="replay-business">↺ 重播比較</button></div>
+      <div class="business-grid">
+        <article class="comparison-card panel baseline"><div class="comparison-top"><span class="eyebrow">INDIVIDUAL PURCHASE</span><span class="pill neutral">1 人購買</span></div><h2>一般購買</h2><div class="profit-label">每趟旅行總貢獻毛利</div><div class="profit"><span>NT$</span><strong data-business-count="80">0</strong></div><div class="bar-track" aria-label="一般購買總貢獻毛利 80 元"><div class="business-bar baseline-bar"></div></div><dl class="metrics"><div><dt>eSIM 訂單</dt><dd><b data-business-count="1">0</b><span>張</span></dd></div><div><dt>單張貢獻毛利</dt><dd><span>NT$</span><b data-business-count="80">0</b></dd></div><div><dt>新增 App 使用者</dt><dd><b data-business-count="0">0</b><span>人</span></dd></div></dl><div class="equation">1 張 × NT$80 = NT$80</div></article>
+        <article class="comparison-card panel group"><div class="comparison-top"><span class="eyebrow">GROUP TRIP DEAL</span><span class="pill">4 人組隊</span></div><h2>旅伴組隊省</h2><div class="profit-label">每趟旅行總貢獻毛利</div><div class="profit accent"><span>NT$</span><strong data-business-count="240">0</strong><span class="growth-badge">3×</span></div><div class="bar-track" aria-label="四人組隊總貢獻毛利 240 元"><div class="business-bar group-bar"></div></div><dl class="metrics"><div><dt>eSIM 訂單</dt><dd><b data-business-count="4">0</b><span>張</span></dd></div><div><dt>單張貢獻毛利</dt><dd><span>NT$</span><b data-business-count="60">0</b></dd></div><div><dt>新增 App 使用者</dt><dd class="accent">+<b data-business-count="3">0</b><span>人</span></dd></div></dl><div class="equation">4 張 × NT$60 = NT$240</div></article>
+      </div>
+      <div class="business-takeaway"><div><span>同一趟旅行的增量</span><strong>+ NT$<b data-business-count="160">0</b><small>總貢獻毛利</small></strong></div><p><strong>優惠有成本，整團成交才有增量。</strong><br>實際上線需驗證新增訂單，而非只把原本會買的人打折。</p></div>
+      <p class="footnote business-note"><strong>Mock Data · 非和泰真實財務或成效。</strong>假設四人皆付款、3 位原非用戶；單張貢獻毛利已扣除方案、福利與其他變動成本。此比較不等於公司淨利，亦非成效保證。</p>
+    </section>
+
+    <section id="winwin" class="page" aria-labelledby="winwin-title" hidden>
+      <div class="page-heading"><div><div class="eyebrow">05 / WIN–WIN</div><h1 id="winwin-title" tabindex="-1">旅伴覺得划算，<span class="accent">去趣也有成長。</span></h1><p>每一份福利，都對應一個值得驗證的商業價值。</p></div><button class="button secondary compact" id="replay-winwin">↺ 播放雙方收益</button></div>
+      <div class="win-grid"><article class="win-card"><div class="win-label">FOR TRAVELERS</div><h2>消費者得到什麼？</h2><p class="win-subtitle">「反正都要買，一起買更划算。」</p><div class="win-benefit" data-win="0"><span class="benefit-check">✓</span><div><h3>一起買更划算</h3><p>同一團旅伴，解鎖專屬旅伴價。</p></div></div><div class="win-benefit" data-win="1"><span class="benefit-check">✓</span><div><h3>額外流量與旅金</h3><p>+500MB、30 chicCoin，優惠有感。</p></div></div><div class="win-benefit" data-win="2"><span class="benefit-check">✓</span><div><h3>旅行規劃更方便</h3><p>加入後直接共編，行程和旅伴都在一起。</p></div></div></article>
+        <div class="win-connector" aria-hidden="true">↔</div>
+        <article class="win-card company"><div class="win-label">FOR CHICTRIP</div><h2>去趣得到什麼？</h2><p class="win-subtitle">「一次規劃，帶動整團交易與使用。」</p><div class="win-benefit" data-win="0"><span class="benefit-check">✓</span><div><h3>提高 eSIM attach rate</h3><p>讓更多行程旅伴，在去趣完成 eSIM 購買。</p></div></div><div class="win-benefit" data-win="1"><span class="benefit-check">✓</span><div><h3>旅伴邀請帶來新用戶</h3><p>福利促成邀請，共編提供持續使用的理由。</p></div></div><div class="win-benefit" data-win="2"><span class="benefit-check">✓</span><div><h3>提高每趟旅行總貢獻毛利</h3><p>以更多成交張數，支撐每人的優惠成本。</p></div></div></article></div>
+      <div class="closing-line"><span class="eyebrow">THE BUSINESS IDEA</span><blockquote>Sacrifice margin per order <br><span>to maximize profit per trip.</span></blockquote><p>讓利到每張訂單，把價值做大到整趟旅行。</p></div>
+      <div class="win-footer"><span class="footnote">以上為提案預期價值；實際需以購買轉換、增量毛利與旅後留存驗證。</span><a class="text-link" href="#demo">再體驗一次 Demo <span aria-hidden="true">↗</span></a></div>
+    </section>
+<section id="smart-deal" class="page idea-page" aria-labelledby="smart-deal-title" hidden>
+  <div class="page-heading idea-heading">
+    <div><div class="eyebrow">IDEA 02 / SMART DATA <span class="mock-badge">MOCK DATA</span></div><h1 id="smart-deal-title" tabindex="-1">網路買剛剛好，<span class="accent">少花也安心。</span></h1><p>從旅行習慣推薦流量；若用量超出預估，再給一次安心補充。</p></div>
+    <div class="idea-switch" role="group" aria-label="AI 買剛剛好展示內容"><button type="button" data-idea-view="demo" aria-pressed="true">點子 Demo</button><button type="button" data-idea-view="business" aria-pressed="false">商業邏輯</button></div>
+  </div>
+  <div data-idea-panel="demo">
+    <div class="idea-grid">
+      <article class="panel idea-card">
+        <div class="idea-card-top"><span class="eyebrow">這趟旅行</span><span class="pill neutral">日本 · 5 日</span></div>
+        <h2>Tokyo 5 Days</h2><p class="idea-subtitle">你在旅途中，通常怎麼用網路？</p>
+        <div class="idea-habits" role="group" aria-label="網路使用習慣">
+          <button type="button" data-habit="light" aria-pressed="false"><strong>輕量</strong><span>地圖、訊息為主</span></button>
+          <button type="button" data-habit="daily" aria-pressed="true"><strong>日常</strong><span>導航、社群、照片</span></button>
+          <button type="button" data-habit="heavy" aria-pressed="false"><strong>重度</strong><span>影片、熱點分享</span></button>
+        </div>
+        <div class="idea-estimate"><div><span class="idea-label">模擬每日用量</span><p><strong id="smart-estimate">1.4</strong><span>GB / day</span></p></div><span class="idea-estimate-arrow" aria-hidden="true">→</span><div><span class="idea-label">建議方案</span><p><strong id="smart-plan-quota">2</strong><span>GB / day</span></p></div></div>
+        <p id="smart-habit-note" class="idea-inline-note">以導航、傳照片及一般社群使用，示範預留流量空間。</p>
+        <div class="idea-small-callout"><strong>AI 的角色</strong><p>將旅遊天數、使用習慣轉成容易理解的購買建議。</p></div>
+      </article>
+      <article class="panel idea-card idea-offer-card">
+        <div class="idea-card-top"><span class="eyebrow">YOUR FIT, YOUR SAVING</span><span class="pill">買剛剛好</span></div>
+        <h2 id="smart-plan-name">日本 2GB／日 · 5 日</h2>
+        <div class="idea-price"><span>NT$</span><strong id="smart-price">299</strong><span class="idea-price-reference">同為 5 日吃到飽 <s>NT$499</s></span></div>
+        <div class="idea-saved"><span>這趟少花</span><strong>NT$<b id="smart-saving">200</b></strong></div>
+        <div class="idea-safety">
+          <div class="idea-safety-top"><span class="idea-outline-check" aria-hidden="true">✓</span><div><h3>500MB 流量安心包</h3><p>模擬依建議購買後，流量提前用完。</p></div></div>
+          <div class="idea-safety-actions"><button type="button" id="smart-shortage" class="button secondary compact">模擬流量不足</button><button type="button" id="smart-claim" class="button primary compact" hidden>領取一次安心包</button></div>
+          <p id="smart-safety-status" class="idea-status" role="status">用量不夠時，還有一次補充機會。</p>
+          <button type="button" id="smart-reset" class="idea-reset-button" hidden>重設安心包體驗 ↺</button>
+        </div>
+      </article>
+    </div>
+    <p class="idea-footnote">Mock Data · 價格、用量與福利皆為假設；本頁使用固定規則模擬，未串接實際 GenAI。切換使用習慣可重設安心包體驗；實際補充能力與適用條件待供應商確認。</p>
+  </div>
+  <div data-idea-panel="business" hidden>
+    <div class="idea-business-intro"><div><span class="eyebrow">100 位高意圖訪客 · 模擬情境</span><h2>推薦合適方案，讓猶豫變成購買。</h2></div><button type="button" class="button secondary compact" data-idea-replay>↺ 重播比較</button></div>
+    <div class="idea-business-grid">
+      <article class="panel idea-card"><span class="idea-label">原購買流程</span><h3>20 筆訂單</h3><div class="idea-business-number"><span>NT$</span><strong data-idea-count="1600">1,600</strong></div><p class="idea-label">模擬總貢獻毛利</p><div class="idea-business-track"><div class="idea-business-fill idea-business-fill-muted" style="--idea-width:86%"></div></div><p class="idea-equation">20 筆 × NT$80 = NT$1,600</p></article>
+      <article class="panel idea-card idea-tinted"><span class="idea-label">推薦＋安心包</span><h3>假設提升至 26 筆訂單</h3><div class="idea-business-number accent"><span>NT$</span><strong data-idea-count="1860">1,860</strong></div><p class="idea-label">扣除安心包後的模擬總貢獻毛利</p><div class="idea-business-track"><div class="idea-business-fill" style="--idea-width:100%"></div></div><p class="idea-equation">26 筆 × NT$75 − 安心包 NT$90 = NT$1,860</p></article>
+    </div>
+    <div class="idea-business-bottom"><div><span class="idea-label">每 100 位訪客的模擬增量</span><strong class="accent">+ NT$<b data-idea-count="260">260</b></strong></div><p>少買一點的損失，由更多成交補回。<br><strong>要驗證：購買轉換率、補包率、扣除補貼後的增量毛利。</strong></p></div>
+    <p class="idea-footnote">Mock Data · 非和泰真實財務，亦非成效保證。NT$75 已扣除一般變動成本，安心包成本另列；訂單增加與供應商補包成本皆需實測。</p>
+  </div>
+</section>
+
+<section id="data-back" class="page idea-page" aria-labelledby="data-back-title" hidden>
+  <div class="page-heading idea-heading">
+    <div><div class="eyebrow">IDEA 03 / DATA BACK <span class="mock-badge">MOCK DATA</span></div><h1 id="data-back-title" tabindex="-1">用不完的流量，<span class="accent">變成下趟的期待。</span></h1><p>總量型方案剩餘流量，兌換下次旅遊可用的 chicCoin。</p></div>
+    <div class="idea-switch" role="group" aria-label="剩餘流量回饋展示內容"><button type="button" data-idea-view="demo" aria-pressed="true">點子 Demo</button><button type="button" data-idea-view="business" aria-pressed="false">商業邏輯</button></div>
+  </div>
+  <div data-idea-panel="demo">
+    <div class="idea-grid">
+      <article class="panel idea-card">
+        <div class="idea-card-top"><span class="eyebrow">東京旅程已結束</span><span class="pill neutral">總量型方案</span></div><h2>日本 10GB · 5 日</h2><p class="idea-subtitle">10GB 是整趟總量，不是每天重置的額度。</p>
+        <div class="idea-slider-heading"><label for="data-usage">拖曳模擬實際使用量</label><span><strong id="data-used">7.8</strong> / 10 GB</span></div>
+        <input id="data-usage" class="idea-slider" type="range" min="0" max="10" step="0.1" value="7.8" aria-valuetext="已使用 7.8 GB，剩餘 2.2 GB">
+        <div class="idea-range-labels"><span>0 GB</span><span>10 GB</span></div>
+        <div class="idea-usage-track" aria-hidden="true"><span id="data-used-bar" style="width:78%"></span></div>
+        <div class="idea-usage-legend"><span><i></i>已使用 <b id="data-used-legend">7.8</b> GB</span><span><i></i>剩餘 <b id="data-left-legend">2.2</b> GB</span></div>
+        <div class="idea-small-callout"><strong>把浪費感，換成回來的理由。</strong><p>使用者看得到未用完的額度，去趣獲得下一趟旅程的回訪機會。</p></div>
+      </article>
+      <article class="panel idea-card idea-offer-card">
+        <div class="idea-card-top"><span class="eyebrow">YOUR NEXT TRIP</span><span class="pill">下趟旅金</span></div><h2>這趟剩下，下趟用上。</h2>
+        <div class="idea-data-exchange"><div><span class="idea-label">剩餘流量</span><p><strong id="data-left">2.2</strong><span>GB</span></p></div><span aria-hidden="true">→</span><div><span class="idea-label">可兌換</span><p class="accent"><strong id="data-coins">35</strong><span>chicCoin</span></p></div></div>
+        <p class="idea-conversion-rule">每剩餘 1GB 回饋 16 chicCoin，<br>無條件捨去至整數，最高 60 chicCoin。</p>
+        <button type="button" id="data-redeem" class="button primary full-width">兌換 35 chicCoin <span aria-hidden="true">→</span></button>
+        <p id="data-status" class="idea-status" role="status">兌換後可抵下次符合資格的消費，不可現金提領；模擬有效期 90 天。</p>
+        <button type="button" id="data-reset" class="idea-reset-button" hidden>調整用量，重設體驗 ↺</button>
+      </article>
+    </div>
+    <p class="idea-footnote">Mock Data · 僅適用本提案的總量型方案；未連接實際訂單。上線需取得電信商實際剩餘流量 API，既有供應能力待確認；chicCoin 發放與抵用規則均為提案假設。</p>
+  </div>
+  <div data-idea-panel="business" hidden>
+    <div class="idea-business-intro"><div><span class="eyebrow">發出 100 份 × 35 chicCoin · 模擬情境</span><h2>回饋不是現金退款，是下一趟的回購誘因。</h2></div><button type="button" class="button secondary compact" data-idea-replay>↺ 重播比較</button></div>
+    <div class="idea-business-grid">
+      <article class="panel idea-card"><span class="idea-label">假設 30% 旅金被使用</span><h3>預期抵用成本</h3><div class="idea-business-number"><span>NT$</span><strong data-idea-count="1050">1,050</strong></div><div class="idea-business-track"><div class="idea-business-fill idea-business-fill-muted" style="--idea-width:73%"></div></div><p class="idea-equation">100 份 × 30% × NT$35 = NT$1,050</p></article>
+      <article class="panel idea-card idea-tinted"><span class="idea-label">假設帶來 12 筆額外回購</span><h3>新增回購貢獻毛利</h3><div class="idea-business-number accent"><span>NT$</span><strong data-idea-count="1440">1,440</strong></div><div class="idea-business-track"><div class="idea-business-fill" style="--idea-width:100%"></div></div><p class="idea-equation">12 筆 × NT$120 = NT$1,440</p></article>
+    </div>
+    <div class="idea-business-bottom"><div><span class="idea-label">扣除全部抵用成本的模擬增量</span><strong class="accent">+ NT$<b data-idea-count="390">390</b></strong></div><p>抵用成本全部計入，只計額外帶來的回購。<br><strong>要驗證：旅金兌換率、增量回購、回購毛利。</strong></p></div>
+    <p class="idea-footnote">Mock Data · 假設 1 chicCoin 抵 NT$1；NT$120 為抵用前、扣一般變動成本的單筆貢獻毛利。成本與新增回購均為假設，需對照實驗驗證，不保證回購或獲利。</p>
+  </div>
+</section>
+
+<section id="social-trip" class="page idea-page" aria-labelledby="social-trip-title" hidden>
+  <div class="page-heading idea-heading">
+    <div><div class="eyebrow">IDEA 04 / INSPIRATION TO TRIP <span class="mock-badge">MOCK DATA</span></div><h1 id="social-trip-title" tabindex="-1">看到想去，<span class="accent">下一步就能成行。</span></h1><p>把旅遊靈感接到行程、eSIM 與旅伴邀請。</p></div>
+    <div class="idea-switch" role="group" aria-label="靈感成行展示內容"><button type="button" data-idea-view="demo" aria-pressed="true">點子 Demo</button><button type="button" data-idea-view="business" aria-pressed="false">商業邏輯</button></div>
+  </div>
+  <div data-idea-panel="demo">
+    <div class="idea-grid idea-social-grid">
+      <article class="panel idea-card">
+        <div class="idea-card-top"><span class="eyebrow">旅行靈感</span><span class="pill neutral">公開內容模擬</span></div>
+        <div class="idea-place-options" role="group" aria-label="選擇模擬旅遊靈感"><button type="button" data-social-place="asakusa" aria-pressed="true">淺草散步</button><button type="button" data-social-place="shibuya" aria-pressed="false">澀谷逛街</button></div>
+        <div class="idea-social-source"><div class="idea-source-author"><span class="avatar">旅</span><div><strong>旅遊靈感筆記</strong><span>Mock 旅人 · 模擬貼文</span></div></div><h2 id="social-source-title">東京的第一天，慢慢逛淺草。</h2><p id="social-source-text">早上去淺草寺，穿過仲見世商店街吃點心，再沿著隅田公園散步。想和朋友一起，把這條路線放進東京 5 日遊。</p><span id="social-source-tag" class="idea-source-tag">#東京 #淺草 #朋友旅行</span></div>
+        <button type="button" id="social-organize" class="button primary full-width">整理成行程 <span aria-hidden="true">→</span></button>
+        <p class="idea-footnote">本頁以預設資料展示整理結果，未擷取社群內容、讀取私人資料或呼叫 GenAI。</p>
+      </article>
+      <article class="panel idea-card idea-social-result">
+        <div class="idea-card-top"><span class="eyebrow">從收藏，到出發</span><span id="social-progress-label" class="idea-label">0 / 3</span></div>
+        <ol class="idea-reveal-steps">
+          <li data-social-step="1"><span class="idea-step-dot">1</span><div><h3>景點整理成一日路線</h3><p id="social-stops">淺草寺 → 仲見世商店街 → 隅田公園</p></div></li>
+          <li data-social-step="2"><span class="idea-step-dot">2</span><div><h3>辨識旅遊意圖</h3><p id="social-intent">日本 · 東京 5 日 · 朋友同行 · 導航與照片分享</p></div></li>
+          <li data-social-step="3"><span class="idea-step-dot">3</span><div><h3>接到購買與同行入口</h3><p>帶著這份計畫，挑網路、邀旅伴。</p><div class="idea-inline-links"><a href="#smart-deal">挑選 eSIM →</a><a href="#demo">邀請旅伴共編 →</a></div></div></li>
+        </ol>
+        <p id="social-process-status" class="idea-status" role="status">選一則靈感，看看它如何連到下一步。</p>
+        <button type="button" id="social-share" class="button secondary full-width" disabled>產生分享卡 <span aria-hidden="true">＋</span></button>
+      </article>
+    </div>
+    <div id="social-share-card" class="panel idea-share-card" hidden><div><span class="eyebrow">可複製的行程卡</span><h3>把這趟旅行，交給下一位旅伴。</h3><p>複製文字後由你選擇分享位置，不會自動發文。</p></div><textarea id="social-share-text" readonly rows="5" aria-label="可複製的行程卡文字"></textarea><div class="idea-share-actions"><button type="button" id="social-copy" class="button primary compact">複製行程卡</button><span id="social-copy-status" class="idea-label" role="status"></span></div></div>
+    <p class="idea-footnote">去趣已有 AI 排行程功能；本提案的新價值是「把靈感接到 eSIM 與旅伴邀請」，分享卡為純文字模擬，不包含真實共編連結。</p>
+  </div>
+  <div data-idea-panel="business" hidden>
+    <div class="idea-business-intro"><div><span class="eyebrow">SHARE → COEDIT → CONVERT</span><h2>讓一份分享，同時有旅行價值與交易入口。</h2></div><button type="button" class="button secondary compact" data-idea-replay>↺ 播放流程</button></div>
+    <div class="panel idea-social-business">
+      <ol class="idea-business-flow">
+        <li data-idea-business-step><span>01</span><h3>分享可用的行程</h3><p>從旅遊靈感整理成計畫，<br>由使用者選擇分享。</p><strong>有內容才有分享理由</strong></li>
+        <li data-idea-business-step><span>02</span><h3>旅伴加入共編</h3><p>接收者有興趣才加入，<br>共同規劃形成使用情境。</p><strong>邀請帶來有效使用</strong></li>
+        <li data-idea-business-step><span>03</span><h3>自選購買 eSIM</h3><p>依目的地與天數導購，<br>讓網路跟著旅程準備。</p><strong>把需求接到交易</strong></li>
+      </ol>
+      <p class="idea-flow-conclusion" role="status">追蹤分享後的共編加入率、eSIM 購買率與旅後留存，確認分享是否帶來實際增量。</p>
+    </div>
+    <div class="idea-small-callout"><strong>AI 整理，使用者決定。</strong><p>降低整理與分享的門檻；購買仍由旅客自行選擇，不把曝光、分享或邀請直接算成成交。</p></div>
+    <p class="idea-footnote">Mock Data · 此流程為待驗證的商業假設，分享、加入或購買皆非成效保證。此 Demo 未連接任何社群、真實用戶或訂單。</p>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="site-footer"><div class="footer-caption"><span class="footer-dot"></span>概念原型 <span class="footer-separator">/</span> 情境、福利與數據均為模擬</div><div class="page-controls"><span id="page-caption">概念</span><span class="page-index"><b id="page-current">01</b> / <span id="page-total">08</span></span><button class="arrow-button" id="previous-page" aria-label="上一頁">←</button><button class="arrow-button" id="next-page" aria-label="下一頁">→</button></div></footer>
+  <noscript><div class="noscript">請在瀏覽器開啟 JavaScript，以體驗頁面切換及組隊互動。</div></noscript>
+</body>
+</html>

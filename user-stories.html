@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="去趣 eSIM 競賽提案的 User Story 工作台：角色、需求、價值與 Given／When／Then 驗收情境。">
+  <title>去趣 · User Story 工作台</title>
+  <style>
+:root{--ink:#242a28;--muted:#69746d;--accent:#326956;--accent-dark:#254f40;--tint:#eef5f0;--line:#e2e8e3;--wash:#f7f9f6;--white:#fff;--font:"Segoe UI","Microsoft JhengHei","PingFang TC",sans-serif;--mono:"Cascadia Code",Consolas,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:25px}body{margin:0;font-family:var(--font);color:var(--ink);background:var(--wash);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit;color:inherit}button,a,input,select{touch-action:manipulation}button{cursor:pointer}button:disabled{opacity:.42;cursor:default}a{color:inherit}h1,h2,h3,p,dl,dd{margin:0}button{background:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #84a695;outline-offset:4px}button[hidden],[hidden]{display:none!important}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip{position:fixed;z-index:10;top:-100px;left:20px;padding:12px 20px;background:var(--accent);color:white}.skip:focus{top:12px}.site-header{background:var(--white);border-bottom:1px solid var(--line);min-height:82px;padding:16px max(30px,4vw);display:flex;align-items:center;gap:24px}.brand{display:flex;align-items:baseline;gap:9px;text-decoration:none;color:var(--accent);font-size:27px;font-weight:750;letter-spacing:-1.2px;white-space:nowrap}.brand span{font-size:13px;letter-spacing:-.4px}.header-divider{height:23px;width:1px;background:var(--line)}.workspace-name{font-size:13px;color:var(--ink);white-space:nowrap}.workspace-name span{color:var(--muted);margin-left:9px;font-size:12px}.header-actions{margin-left:auto;display:flex;align-items:center;gap:14px}.quiet-button,.outline-button,.solid-button{border:1px solid transparent;border-radius:8px;padding:9px 14px;min-height:44px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:15px;transition:background .18s,border-color .18s}.outline-button{border-color:var(--line);background:white}.outline-button:hover{border-color:#a8bbae;background:var(--wash)}.quiet-button:hover{background:var(--tint)}.solid-button{background:var(--accent);color:white}.solid-button:hover{background:var(--accent-dark)}.text-button{border:0;color:var(--accent);font-size:12px;min-height:44px;padding:5px 2px}.text-button:hover{text-decoration:underline}.workspace{max-width:1520px;padding:42px 4vw 0;margin:0 auto}.intro{display:flex;justify-content:space-between;gap:35px;align-items:flex-end}.eyebrow{font-size:10px;font-weight:650;letter-spacing:1.55px;display:flex;align-items:center;gap:9px;color:var(--muted)}.small-square{width:6px;height:6px;background:var(--accent);display:inline-block}.intro h1{font-size:clamp(25px,2.45vw,37px);font-weight:650;letter-spacing:-1.3px;line-height:1.4;margin:13px 0 10px}.intro-copy{font-size:14px;color:var(--muted)}.document-info{display:flex;flex-direction:column;text-align:right;flex-shrink:0;gap:3px;padding-bottom:3px}.document-info>span{font-size:11px;color:var(--muted)}.document-info strong{font-size:15px;font-weight:600;letter-spacing:.2px}.document-info small{font-size:10px;color:var(--muted)}.journey{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:14px 0 25px;border:1px solid var(--line);background:white;border-radius:12px;overflow:hidden}.epic-button{position:relative;display:flex;gap:11px;align-items:center;border:0;padding:18px 16px;text-align:left;min-width:0;transition:background .2s}.epic-button+.epic-button{border-left:1px solid var(--line)}.epic-button:hover,.epic-button[aria-pressed="true"]{background:var(--tint)}.epic-number{font-family:var(--mono);font-size:14px;color:var(--accent);width:34px;height:34px;display:grid;place-items:center;border:1px solid #d3e0d8;border-radius:50%;flex-shrink:0}.epic-button[aria-pressed="true"] .epic-number{background:var(--accent);color:white;border-color:var(--accent)}.epic-button h2{font-size:15px;font-weight:650;line-height:1.5}.epic-button p{font-size:11px;color:var(--muted);margin-top:2px}.epic-arrow{font-size:20px;margin-left:auto;color:#a0aea4}.epic-count{font-size:10px;color:var(--muted);font-weight:400;margin-left:9px;white-space:nowrap}.board{display:grid;grid-template-columns:285px minmax(0,1fr);gap:24px;align-items:start}.story-sidebar{background:white;border:1px solid var(--line);border-radius:12px;padding:17px 15px 18px;position:sticky;top:20px}.sidebar-heading{display:flex;align-items:center;justify-content:space-between;margin:0 3px 10px}.sidebar-heading h2{font-size:14px;font-weight:650}.search-box{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:7px;padding:0 12px;min-height:45px;background:#fcfdfb}.search-box>span:not(.visually-hidden){font-size:21px;color:var(--muted);line-height:1}.search-box input{min-width:0;width:100%;border:0;background:transparent;font-size:12px;padding:10px 0;outline-offset:2px}.filter-row{display:flex;align-items:center;gap:9px;margin:9px 0 11px;font-size:11px;color:var(--muted)}.filter-row label{white-space:nowrap}.filter-row select{width:100%;background:white;border:0;min-height:40px;font-size:12px}.list-caption{display:flex;justify-content:space-between;align-items:center;padding:9px 3px 12px;font-size:10px;color:var(--muted);border-top:1px solid var(--line)}#story-list{display:flex;flex-direction:column;gap:5px}.story-item{border:1px solid transparent;border-radius:8px;text-decoration:none;display:block;padding:12px 13px;transition:background .15s,border-color .15s}.story-item:hover{background:var(--wash)}.story-item[aria-current="true"]{background:var(--tint);border-color:#b6cec0}.story-item-top{display:flex;gap:12px;align-items:center;justify-content:space-between}.story-id{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.4px}.story-item[aria-current="true"] .story-id{color:var(--accent)}.priority{font-size:9px;font-weight:600;letter-spacing:.3px;border:1px solid var(--line);border-radius:4px;padding:0 5px;color:var(--muted);line-height:1.8}.priority.must{border-color:#c6d7ca;color:var(--accent);background:#f6faf7}.story-item h3{font-size:13px;font-weight:600;margin-top:5px;line-height:1.6}.story-item-bottom{font-size:10px;color:var(--muted);margin-top:4px}.sidebar-note{font-size:10px;line-height:1.9;color:var(--muted);border-top:1px solid var(--line);padding:15px 3px 0;margin-top:16px}.empty-list{font-size:13px;color:var(--muted);text-align:center;padding:30px 5px}.empty-list button{margin-top:8px}.story-surface{background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 7px 25px #283b2e03;animation:appear .22s ease both}#story-detail:focus{outline:none}.story-top{padding:25px 30px 23px}.story-meta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--muted)}.story-meta .story-id{color:var(--accent);font-size:12px;font-weight:600}.dot-separator{color:#b7c1b9}.draft-tag{margin-left:auto;font-size:10px;background:var(--wash);padding:3px 8px;border-radius:4px;color:var(--muted)}.story-title-row{display:flex;gap:20px;align-items:center;justify-content:space-between;margin-top:15px}.story-title-row h2{font-size:clamp(23px,2vw,30px);letter-spacing:-1px;line-height:1.4;font-weight:650}.story-title-row button{flex-shrink:0;font-size:11px;padding:8px 12px}.context{font-size:12px;line-height:1.9;color:var(--muted);margin-top:13px}.statement{display:grid;grid-template-columns:.85fr 1.25fr 1.1fr;margin-top:22px;background:var(--tint);border:1px solid #dce8df;border-radius:9px;overflow:hidden}.statement>div{padding:18px 19px}.statement>div+div{border-left:1px solid #dce8df}.statement dt{font-size:10px;letter-spacing:.4px;color:var(--accent);margin-bottom:9px;font-weight:600}.statement dt span{font-size:9px;font-weight:400;letter-spacing:.8px;margin-left:6px}.statement dd{font-size:15px;line-height:1.8;font-weight:500}.pain-line{display:flex;gap:12px;margin-top:18px;font-size:11px;line-height:1.85;color:var(--muted)}.pain-line strong{font-size:10px;white-space:nowrap;color:var(--ink);padding-top:1px;font-weight:600}.acceptance{padding:23px 30px 28px;border-top:1px solid var(--line)}.section-heading{display:flex;align-items:center;gap:12px;justify-content:space-between}.section-heading h3{font-size:15px;line-height:1.5;font-weight:650}.section-heading h3 span{font-size:10px;font-weight:400;color:var(--muted);letter-spacing:.3px;margin-left:7px}.section-heading .quiet-button{font-size:11px;min-height:36px;padding:5px 9px}.section-description{font-size:11px;color:var(--muted);margin-top:5px}.scenario-tabs{display:flex;gap:7px;margin:18px 0 18px;flex-wrap:wrap}.scenario-tabs button{padding:8px 12px;border:1px solid var(--line);border-radius:6px;font-size:11px;min-height:40px}.scenario-tabs button span{font-family:var(--mono);font-size:10px;margin-right:8px;color:var(--muted)}.scenario-tabs button[aria-selected="true"]{border-color:var(--accent);color:var(--accent);background:var(--tint)}.scenario-tabs button[aria-selected="true"] span{color:var(--accent)}.scenario-title{display:flex;align-items:baseline;gap:8px;margin-bottom:15px;font-size:14px;font-weight:600;line-height:1.6}.scenario-title>span{font-family:var(--mono);font-size:10px;font-weight:400;color:var(--muted);white-space:nowrap}.scenario-panel{animation:appear .2s ease both}.gwt{display:flex;flex-direction:column;gap:10px}.gwt-row{display:grid;grid-template-columns:90px minmax(0,1fr);gap:15px;align-items:start;padding:14px 16px;border:1px solid var(--line);border-radius:7px;background:white;transition:border-color .2s,background .2s,box-shadow .2s}.gwt-row.reading{border-color:#739882;background:#f1f7f2;box-shadow:0 0 0 2px #3269560c}.gwt-key{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);line-height:1.6}.gwt-key small{display:block;color:var(--muted);font-family:var(--font);font-size:10px;font-weight:400;letter-spacing:1px;margin-top:2px}.gwt-row p{font-size:13px;line-height:1.9}.scenario-foot{display:flex;align-items:center;justify-content:space-between;gap:15px;font-size:10px;color:var(--muted);margin-top:12px}.read-status{color:var(--accent);font-size:10px}.detail-accordions{padding:0 30px 24px}.detail-accordions details{border-top:1px solid var(--line)}.detail-accordions summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;justify-content:space-between;padding:16px 0;font-size:12px;font-weight:600;min-height:50px}.detail-accordions summary::-webkit-details-marker{display:none}.detail-accordions summary .summary-title{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}.detail-accordions summary small{color:var(--muted);font-size:10px;font-weight:400}.detail-accordions summary:after{content:"＋";font-size:15px;color:var(--muted)}.detail-accordions details[open] summary:after{content:"−"}.details-content{font-size:12px;color:var(--muted);padding:0 0 17px;line-height:1.9}.details-content ul{padding-left:20px;margin:0}.details-content li+li{margin-top:6px}.details-content strong{color:var(--ink);font-weight:600}.dependency-list{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 13px}.dependency-list button{border:1px solid var(--line);border-radius:5px;background:var(--wash);min-height:36px;padding:5px 11px;font-family:var(--mono);font-size:11px;color:var(--accent)}.detail-bottom{background:#fcfdfb;padding:15px 30px;border-top:1px solid var(--line);display:flex;gap:18px;align-items:center;justify-content:space-between}.detail-bottom .text-button{font-size:12px}.detail-bottom span{font-size:10px;color:var(--muted);font-family:var(--mono)}.empty-detail{border:1px dashed #bdcdc0;border-radius:12px;min-height:430px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:white;padding:35px}.empty-detail h2{font-size:22px;font-weight:500}.empty-detail p{font-size:13px;color:var(--muted);margin:15px 0 22px}.scope-note{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;border-top:1px solid var(--line);padding:30px 0;margin-top:35px;align-items:center}.scope-note h2{font-size:16px;margin-top:7px;font-weight:550}.scope-note p{font-size:12px;color:var(--muted);line-height:1.9}.site-footer{border-top:1px solid var(--line);margin:0 4vw;min-height:80px;display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:10px;color:var(--muted)}.site-footer button{font-size:11px}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,12px);background:var(--accent-dark);color:white;border-radius:8px;padding:12px 22px;z-index:20;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px)}.toast.show{opacity:1;transform:translate(-50%,0)}dialog{border:1px solid var(--line);border-radius:15px;padding:0;max-width:750px;width:calc(100% - 36px);max-height:85svh;color:var(--ink);box-shadow:0 20px 80px #1a302425}dialog::backdrop{background:#1b2a245c;backdrop-filter:blur(4px)}.dialog-header{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid var(--line);background:white;position:sticky;top:0;z-index:1}.dialog-header h2{font-size:22px;font-weight:600;line-height:1.4;letter-spacing:-.6px;margin-top:7px}.close-button{border:1px solid var(--line);border-radius:50%;width:44px;height:44px;flex-shrink:0;font-size:23px;line-height:1}.dialog-body{padding:22px 28px;font-size:13px;color:var(--muted);line-height:1.9}.dialog-body section+section{margin-top:25px}.dialog-body h3{color:var(--ink);font-size:14px;font-weight:600;margin-bottom:9px}.dialog-body strong{font-weight:600;color:var(--ink)}.guide-definitions{border:1px solid var(--line);border-radius:7px;padding:8px 15px;margin:12px 0}.guide-definitions>div{display:grid;grid-template-columns:140px 1fr;gap:15px;padding:8px 0;font-size:12px}.guide-definitions dt{color:var(--accent);font-family:var(--mono)}.dialog-body ul{padding-left:20px}.dialog-body li+li{margin-top:8px}.sources{border-top:1px solid var(--line);padding-top:20px}.sources a{display:block;color:var(--accent);font-size:12px;margin-bottom:6px}.sources p{font-size:11px;margin-top:12px}#copy-text{display:block;margin-top:16px;min-height:300px;width:100%;resize:vertical;font-size:12px;line-height:1.8;padding:15px;border:1px solid var(--line);border-radius:8px;background:var(--wash)}#print-content{display:none}.noscript-note{padding:30px;text-align:center;background:var(--tint);border:1px solid var(--line)}
+@keyframes appear{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1650px){.workspace{padding-left:45px;padding-right:45px}.board{grid-template-columns:315px minmax(0,1fr)}.story-top{padding:30px 37px 25px}.acceptance{padding:25px 37px 30px}.detail-accordions{padding:0 37px 25px}.story-item{padding:14px}.statement dd{font-size:16px}.gwt-row p{font-size:14px}}
+@media(max-width:1100px){.workspace{padding:30px 25px 0}.site-header{padding:15px 25px;gap:15px}.workspace-name span{display:none}.header-actions{gap:4px}.intro{gap:20px}.document-info{max-width:230px}.intro h1{font-size:29px}.board{grid-template-columns:240px minmax(0,1fr);gap:18px}.epic-button{padding:17px;gap:11px}.epic-button p{font-size:10px}.epic-count{display:none}.story-top{padding:22px}.acceptance{padding:21px 22px 25px}.detail-accordions{padding:0 22px 20px}.statement{grid-template-columns:1fr}.statement>div{padding:13px 16px;display:grid;grid-template-columns:90px 1fr;gap:10px}.statement>div+div{border-left:0;border-top:1px solid #dce8df}.statement dt{margin:0;padding-top:3px}.statement dt span{display:block;margin:1px 0 0}.statement dd{font-size:14px}.story-title-row{align-items:flex-start}.story-title-row h2{font-size:25px}.story-title-row button{font-size:10px;padding:7px 9px}.gwt-row{grid-template-columns:73px 1fr;padding:13px;gap:10px}.gwt-row p{font-size:12px}.scope-note{gap:25px}.site-footer{margin:0 25px}}
+@media(max-width:780px){.site-header{flex-wrap:wrap;padding:15px 20px;gap:10px 15px}.header-actions{width:100%;justify-content:flex-end;border-top:1px solid var(--line);padding-top:10px}.workspace-name{margin-left:auto}.header-divider{display:none}.header-actions .quiet-button{margin-right:auto}.workspace{padding:27px 20px 0}.intro{display:block}.intro h1{font-size:27px}.intro-copy{font-size:12px}.document-info{max-width:none;text-align:left;flex-direction:row;flex-wrap:wrap;gap:2px 15px;margin-top:18px}.document-info>span{display:none}.document-info strong{font-size:12px}.document-info small{align-self:center}.journey{margin-top:21px}.epic-button{display:block;padding:13px 12px;min-height:115px}.epic-number{width:auto;height:auto;border:0;display:inline-block;font-size:12px;margin-bottom:8px}.epic-button[aria-pressed="true"] .epic-number{color:var(--accent);background:transparent}.epic-button h2{font-size:12px}.epic-button p{font-size:9px}.epic-arrow{display:none}.board{display:block}.story-sidebar{position:static;padding:13px;margin-bottom:20px}.sidebar-heading{margin:0 3px 5px}.filter-row{margin:6px 0}.list-caption{padding:6px 3px}.sidebar-note{display:none}#story-list{flex-direction:row;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:5px}.story-item{flex:0 0 205px;scroll-snap-align:start;padding:11px 13px;min-height:110px}.story-item h3{font-size:12px}.story-item-bottom{font-size:9px}.story-item-top .priority{font-size:8px}.empty-list{width:100%;padding:15px}.story-top{padding:22px 20px}.story-meta{gap:7px;font-size:10px}.draft-tag{font-size:9px}.story-title-row{gap:13px}.story-title-row h2{font-size:24px}.context{font-size:12px}.acceptance{padding:20px}.section-heading h3{font-size:14px}.section-heading h3 span{display:block;margin:3px 0 0;font-size:9px}.section-heading .quiet-button{min-height:44px}.scenario-tabs button{min-height:44px}.gwt-row{grid-template-columns:65px 1fr;gap:9px}.gwt-row p{font-size:13px}.gwt-key{font-size:11px}.scenario-title{font-size:13px}.scenario-foot{align-items:flex-start}.scenario-foot>span:first-child{max-width:220px}.detail-accordions{padding:0 20px 15px}.detail-bottom{padding:12px 20px}.detail-bottom .text-button{font-size:11px}.scope-note{display:block;margin-top:25px;padding:25px 0}.scope-note p{margin-top:12px}.site-footer{margin:0 20px;flex-wrap:wrap;gap:5px 15px;padding:18px 0}.site-footer>span:nth-child(2){order:3;width:100%;font-size:9px}.site-footer button{margin-left:auto}.dialog-header{padding:18px 20px}.dialog-header h2{font-size:19px}.dialog-body{padding:20px}.guide-definitions>div{grid-template-columns:110px 1fr;gap:10px}}
+@media(max-width:420px){.intro h1{font-size:24px}.workspace{padding-left:16px;padding-right:16px}.site-header{padding-left:16px;padding-right:16px}.epic-button{padding:12px 9px}.epic-button p{line-height:1.5;margin-top:5px}.story-title-row{flex-wrap:wrap}.story-title-row button{min-height:38px;font-size:11px}.statement>div{grid-template-columns:70px 1fr;padding:13px}.statement dd{font-size:13px}.story-top{padding:19px 17px}.acceptance{padding:19px 17px}.gwt-row{grid-template-columns:1fr;gap:6px}.gwt-key small{display:inline;margin-left:8px}.scenario-tabs{gap:5px}.scenario-tabs button{padding:8px 10px}.scenario-tabs button span{margin-right:5px}.detail-accordions{padding-left:17px;padding-right:17px}.draft-tag{margin-left:0}.story-meta{line-height:2}.guide-definitions>div{display:block}.guide-definitions dd{margin-top:3px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{body{background:white;font-size:12pt}.site-header,.workspace,.site-footer,dialog,.toast,.skip{display:none!important}#print-content{display:block}.print-cover{margin-bottom:25px;border-bottom:2px solid #326956;padding-bottom:20px}.print-cover h1{font-size:25pt}.print-cover p{font-size:11pt}.print-story{break-before:page}.print-story h2{font-size:20pt;margin-bottom:15px}.print-story h3{font-size:13pt;margin:18px 0 8px}.print-story p,.print-story li{font-size:11pt;line-height:1.7}.print-story .print-scenario{break-inside:avoid;border:1px solid #ddd;padding:12px;margin:12px 0}.print-story ul{padding-left:22px}.print-meta{color:#555;font-size:10pt}@page{size:A4;margin:17mm}}
+
+.audience-note{margin-top:24px;font-size:11px;color:var(--muted)}.audience-note strong{color:var(--ink);margin-right:9px}.audience-count{display:block;font-size:10px;color:var(--accent);margin-top:5px}.audience-label{font-size:11px;color:var(--accent);margin-top:12px}@media(max-width:780px){.journey{grid-template-columns:repeat(2,minmax(0,1fr))}.journey .epic-button:nth-child(odd){border-left:0}.journey .epic-button:nth-child(n+3){border-top:1px solid var(--line)}}
+
+</style>
+</head>
+<body>
+  <a class="skip" href="#story-detail">跳到故事內容</a>
+  <header class="site-header">
+    <a class="brand" href="#US-01" aria-label="去趣 User Story 工作台首頁">去趣<span>chicTrip</span></a>
+    <span class="header-divider" aria-hidden="true"></span>
+    <span class="workspace-name">提案工作台 <span>/ User Stories</span></span>
+    <div class="header-actions">
+      <button class="quiet-button" id="guide-button">撰寫與共通規則</button>
+      <button class="outline-button" id="export-button">下載全部規格 <span aria-hidden="true">↓</span></button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow"><span class="small-square" aria-hidden="true"></span> PRODUCT BACKLOG · 討論稿</p>
+        <h1 id="page-title">把旅行想法，寫成可驗收的故事。</h1>
+        <p class="intro-copy">從圈選排程，到 eSIM 創作福利，再到值得分享的旅行回憶。</p>
+      </div>
+      <div class="document-info"><span>和泰 AI 黑客松 · 去趣 eSIM</span><strong id="catalog-count">4 組 TA / 8 則故事</strong><small>優先級為建議 · 待團隊確認 · 2026.09.08</small></div>
+    </section>
+
+    <p class="audience-note"><strong>目標對象 TA</strong> 依需求分群，同一人可跨組。點選一組，查看對應故事；eSIM 購買是我們希望促成的行為。</p>
+    <nav class="journey" id="audience-nav" aria-label="依目標對象篩選"></nav>
+
+    <section class="board" aria-label="User Story 閱讀工作台">
+      <aside class="story-sidebar" aria-label="故事列表與篩選">
+        <div class="sidebar-heading"><h2>故事列表</h2><button id="reset-filters" class="text-button">顯示全部</button></div>
+        <label class="search-box"><span class="visually-hidden">搜尋故事</span><span aria-hidden="true">⌕</span><input type="search" id="story-search" placeholder="搜尋角色、需求或驗收…" autocomplete="off"></label>
+        <div class="filter-row"><label for="epic-filter">旅程階段</label><select id="epic-filter"><option value="all">全部階段</option></select></div>
+        <div class="filter-row"><label for="priority-filter">優先級</label><select id="priority-filter"><option value="all">全部優先級</option><option value="Must">Must · 核心必要</option><option value="Should">Should · 建議納入</option></select></div>
+        <div class="list-caption"><span id="result-count" role="status" aria-live="polite"></span><span>點選閱讀</span></div>
+        <nav id="story-list" aria-label="選擇 User Story"></nav>
+        <p class="sidebar-note">User Story 描述使用者價值。<br>技術實作與待決問題另列。</p>
+      </aside>
+      <article id="story-detail" tabindex="-1" aria-label="目前故事"></article>
+    </section>
+
+    <section class="scope-note" aria-label="本次範圍">
+      <div><span class="eyebrow">SCOPE NOTE</span><h2>聚焦兩項特色，串起完整旅程。</h2></div>
+      <p>圈選與對話式排程、購買 eSIM 後的多風格回憶創作為本次主線。用量推薦、組隊優惠和趣Chip 回饋，保留為後續細化項目。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>競賽提案 · 獨立離線文件</span><span>故事與驗收規格，不代表功能已完成或測試已通過。</span><button id="print-button" class="text-button">列印全部故事 ↗</button></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="guide-dialog" aria-labelledby="guide-title">
+    <div class="dialog-header"><div><p class="eyebrow">HOW TO READ</p><h2 id="guide-title">故事、驗收、實作，各司其職。</h2></div><button class="close-button" data-close="guide-dialog" aria-label="關閉規則說明">×</button></div>
+    <div class="dialog-body">
+      <section><h3>01 / 一則故事，一個可辨認的價值</h3><p><strong>作為</strong>某個角色，<strong>我希望</strong>完成一件事，<strong>以便</strong>獲得某個價值。故事是需求討論的起點，會經過團隊對話與驗收範例補充；它不是完整的技術設計。</p></section>
+      <section><h3>02 / Given → When → Then</h3><dl class="guide-definitions"><div><dt>Given · 前提</dt><dd>描述已存在的情境與資料。</dd></div><div><dt>When · 行為</dt><dd>描述使用者或外部事件的觸發。</dd></div><div><dt>Then · 結果</dt><dd>描述能觀察、能判斷的預期結果。</dd></div></dl><p>每則包含正常、例外與邊界情境。「逐步閱讀」只輔助解說，沒有執行測試。</p></section>
+      <section><h3>03 / 使用 INVEST 檢查可討論性</h3><p>盡量獨立、可協商、有價值、可估算、足夠小、可測試。依賴和疑問保留在故事旁，避免在資料不足時宣稱已可估點或可直接開發。若一則超出團隊迭代容量，估算時再拆成可驗收的價值增量。</p></section>
+      <section><h3>04 / 本稿的共通規則</h3><ul><li>全部是需求討論稿；Must／Should 為建議，實作與驗收狀態尚未確認。</li><li>四組目標對象依需求分群，同一人可跨組；eSIM 購買是希望促成的轉換行為，訂單資格則屬於福利的前提條件。</li><li>排程、共編與購買分開；生成個人回憶圖由符合資格的本趟 eSIM 訂單解鎖。</li><li>3 張作品、4 種風格等數字是 Mock 範例，正式額度、期限、退款規則待決。</li><li>模型理解偏好並生成內容；路線限制、價格、權益與額度以資料和規則檢查。</li><li>生成、下載、點擊分享不等於已公開發文；新行程、App 使用和訂單分別量測。</li></ul></section>
+      <section><h3>05 / 進入開發與完成驗收</h3><p><strong>開發前：</strong>釐清關鍵問題、補齊資料與依賴、確認情境與估算。<strong>完成時：</strong>依故事驗收、處理例外、保留結果證據，並符合團隊共同的 Definition of Done。以下清單不自動等同測試通過。</p></section>
+      <section class="sources"><h3>撰寫參考</h3><a href="https://agilealliance.org/glossary/user-stories/" target="_blank" rel="noopener noreferrer">Agile Alliance · User Stories ↗</a><a href="https://cucumber.io/docs/gherkin/reference/" target="_blank" rel="noopener noreferrer">Cucumber · Gherkin Reference ↗</a><p>內容基礎：本專案 2026.09.08 特色功能提案。外部參考需連線，所有故事內容可離線閱讀。</p></section>
+    </div>
+  </dialog>
+  <dialog id="copy-dialog" aria-labelledby="copy-title"><div class="dialog-header"><h2 id="copy-title">複製故事規格</h2><button class="close-button" data-close="copy-dialog" aria-label="關閉複製視窗">×</button></div><div class="dialog-body"><p>瀏覽器未開放自動複製。請選取下方文字並複製。</p><textarea id="copy-text" readonly aria-label="故事 Markdown 內容"></textarea></div></dialog>
+  <section id="print-content" aria-label="列印用完整規格"></section>
+  <noscript><p class="noscript-note">此工作台需要啟用 JavaScript。你也可以直接閱讀同資料夾內的 user-stories.md。</p></noscript>
+<script>
+/* 提案討論資料：優先序為建議，情境尚未實作或執行驗證。 */
+window.STORY_DATA = {
+  audiences: [
+    { id: 'planner', title: '想輕鬆排行程的人', subtitle: '少做功課，排出符合偏好的行程', number: '01' },
+    { id: 'adjuster', title: '需要臨時改行程的人', subtitle: '情況改變時，快速調整接下來的安排', number: '02' },
+    { id: 'one-stop', title: '想一次準備好的人', subtitle: '排好行程，接著處理上網準備', number: '03' },
+    { id: 'social', title: '愛分享或從社群找靈感的人', subtitle: '分享旅行，或從朋友的分享找靈感', number: '04' }
+  ],
+  epics: [
+    { id: 'plan', title: '把想法變成行程', subtitle: '圈選、偏好與可控制的修改', number: '01' },
+    { id: 'purchase', title: '買前理解，買後取得權益', subtitle: 'eSIM 規格與回憶創作福利', number: '02' },
+    { id: 'memory', title: '留下回憶，帶來下一趟旅行', subtitle: '個人創作、自主分享與套用', number: '03' }
+  ],
+  stories: [
+    {
+      id: 'US-01', epic: 'plan', audience: 'planner', title: '圈選區域，生成符合偏好的行程',
+      role: '想輕鬆排行程、已有想逛區域的旅客',
+      want: '圈出地圖範圍並說出偏好，取得可保存的行程草案',
+      benefit: '更快得到一份我願意採用的旅行安排',
+      context: '小安圈選淺草、上野一帶，安排一天，偏好甜點、老街與悠閒步調。',
+      pain: '知道大概想去哪裡，卻還要逐一查景點、加入清單並排列時間。',
+      priority: 'Must', scope: '核心流程', dependencies: [],
+      scenarios: [
+        { id: 'AC-01', title: '得到可檢查、可保存的草案', kind: '正常', given: '小安已選旅行日期、09:00–17:00 的可用時段及淺草與上野範圍，輸入「喜歡甜點與老街，下午安排咖啡店」；示範資料中有符合條件的景點。', when: '她按下「產生行程」，檢查草案後選擇保存。', then: '草案包含範圍內的景點、停留時段、交通時間與推薦理由，下午有咖啡店安排且各段不重疊；保存後可重新開啟同一份行程。' },
+        { id: 'AC-02', title: '條件衝突時不產生假可行行程', kind: '例外', given: '她要求 60 分鐘內遊覽兩個景點，但資料中的交通與最低停留時間合計為 90 分鐘。', when: '她要求依目前條件產生行程。', then: '系統指出超出 30 分鐘的衝突，提供延長時段或減少景點的選項；未經確認，不放寬時段或把衝突草案標為可採用。' },
+        { id: 'AC-03', title: '沒有圈選範圍時先補足資料', kind: '邊界', given: '她已輸入偏好與日期，但尚未圈選任何範圍。', when: '她嘗試產生行程。', then: '系統提示先圈選區域，保留已輸入內容；不默認整個東京，也不建立空行程。' }
+      ],
+      rules: ['不必購買 eSIM 才能圈選、產生或保存行程。', '地點、交通及營業時間須有可查資料；不足處標示待確認，不冒充已驗證。', '推薦理由要對應已輸入偏好；首版驗證單一城市與有限景點。'],
+      tasks: ['建立圈選輸入與偏好摘要，區分圈選和拖曳地圖操作。', '串接景點資料與時間限制檢查，再生成推薦說明。', '保存草案與採用條件，記錄開始、產生、保存事件。'],
+      questions: ['首版支援哪些區域與景點資料來源？', '「不要太趕」應如何轉成可讓使用者確認的停留與移動限制？'],
+      metric: '行程採用率＝保存至少一份草案的獨立規劃者／開始圈選的獨立規劃者；另記錄從開始到首次保存的時間中位數。',
+      outOfScope: ['跨國、多城市全自動排程', '保證即時交通與現場營業狀況', '未確認就自動購買票券']
+    },
+    {
+      id: 'US-02', epic: 'plan', audience: 'adjuster', title: '臨時有變化，只調整接下來的安排',
+      role: '因天氣或偏好變化，需要臨時調整行程的旅客',
+      want: '用一句話局部修改行程，預覽後套用並可復原',
+      benefit: '調整旅行方式時，不必重新整理已滿意的內容',
+      context: '東京旅行第二天上午，小安因下雨說「今天下午改成室內，其他保留」，並保留已約好的午餐。',
+      pain: '臨時下雨、店家休息或改變心意時，重排整份行程容易改掉已完成或已約好的安排。',
+      priority: 'Must', scope: '核心流程', dependencies: ['US-01'],
+      scenarios: [
+        { id: 'AC-01', title: '先預覽，再套用局部變更', kind: '正常', given: '目前為第二天上午，第一天已完成，第二天午餐被鎖定，下午有一個戶外景點；資料中有可替代的室內景點。', when: '她輸入「今天下午改成室內，其他保留」，檢查差異後按下套用。', then: '確認前原行程不變；確認後只更新受影響的下午景點及必要的交通段，標明修改原因，已完成行程、午餐、其他日期及未受影響時段保持原樣。' },
+        { id: 'AC-02', title: '無可行替代時保留原安排', kind: '例外', given: '唯一的室內替代景點會與已鎖定午餐衝突，且目前區域沒有其他可行選項。', when: '她要求將下午行程改成室內。', then: '系統指出限制，請她選擇放寬哪個條件；不移動鎖定午餐，不套用衝突版本。' },
+        { id: 'AC-03', title: '復原最近一次套用', kind: '邊界', given: '她剛套用一次局部修改，之後沒有其他人編輯這份行程。', when: '她按下「復原」。', then: '景點、順序及時段回到該次套用前的版本，畫面提示已復原，不留下重複景點。' }
+      ],
+      rules: ['每次套用前列出差異；取消預覽不修改保存版本。', '只調整使用者指定的未完成部分；已完成行程維持原樣，鎖定項目必須由使用者主動解鎖才能變更。', '若有較新的共編版本，須先處理差異，不能以舊草案覆寫。'],
+      tasks: ['將自然語言轉成有範圍的修改要求，列出受影響項目。', '建立預覽、確認、取消與最近一次復原操作。', '為保存版本加入衝突檢查，避免覆寫旅伴的新改動。'],
+      questions: ['跨多次或跨共編版本的復原要支援到什麼範圍？', '必要交通變更超出指定時段時，要如何清楚請使用者確認？'],
+      metric: '局部修改採用率＝確認套用的修改要求數／成功產生修改預覽的要求數；另追蹤套用後立即復原的比例。',
+      outOfScope: ['不經確認就重排整趟旅行', '完整版本分支管理', '以對話直接取消餐廳或交通訂位']
+    },
+    {
+      id: 'US-03', epic: 'plan', audience: 'planner', title: '先一起規劃，是否購買各自決定',
+      role: '想和朋友一起輕鬆排行程的旅伴',
+      want: '加入共編行程，即使還沒有購買 eSIM 也能提出與修改安排',
+      benefit: '與旅伴一起準備旅行，同時保有自己的購買選擇',
+      context: '主揪邀請三位朋友加入東京五日行程，當中有人尚未決定網卡。',
+      pain: '為了加入旅行規劃就被要求先買商品，會中斷朋友協作。',
+      priority: 'Should', scope: '延伸流程', dependencies: ['US-01'],
+      scenarios: [
+        { id: 'AC-01', title: '未購買者也可共編', kind: '正常', given: '朋友有有效邀請連結且具備行程編輯權限，但沒有本趟 eSIM 訂單。', when: '朋友接受邀請並將一個景點加入第三天下午。', then: '所有有權限的旅伴可看到該變更；朋友未被要求付款，購買人數也不因加入共編而增加。' },
+        { id: 'AC-02', title: '無效邀請不洩露私人行程', kind: '例外', given: '主揪已撤銷這份私人行程的邀請連結。', when: '朋友開啟舊連結。', then: '系統說明邀請無效並提供重新索取邀請的方向，不顯示私人景點、住宿或旅伴資料。' },
+        { id: 'AC-03', title: '重複接受邀請不重複加入', kind: '邊界', given: '同一位朋友已是這份行程的共編成員。', when: '朋友再次接受同一份有效邀請。', then: '直接進入既有行程，共編名單只有一筆該成員，成員人數不再增加。' }
+      ],
+      rules: ['共編人數與 eSIM 有效購買人數分別呈現。', '2／3／4 人購買門檻若另行啟用，不是共編人數限制。', '邀請只提供行程權限，不自動授予他人的回憶圖創作額度。'],
+      tasks: ['串接現有邀請與成員權限，測試未購買帳號的完整共編路徑。', '拆開成員計數、訂單計數與創作權益顯示。'],
+      questions: ['現有去趣共編權限與邀請撤銷能力有哪些可直接沿用？', '加入或編輯是否需登入，邀請前可預覽哪些資訊？'],
+      metric: '邀請加入率＝接受邀請的獨立受邀者／開啟有效邀請的獨立受邀者；另量測加入後實際編輯行程者的比例。',
+      outOfScope: ['把每位受邀者自動算成新增 App 使用者', '以購買作為共編門檻', '完整團購退款與分帳機制']
+    },
+    {
+      id: 'US-04', epic: 'purchase', audience: 'one-stop', title: '排好行程，接著把上網準備一起處理',
+      role: '想一次準備好行程與出國上網的旅客',
+      want: '沿用這趟行程資料，在同一個入口看懂適用網卡、價格與回憶創作福利',
+      benefit: '少在不同頁面重填資料，一次完成這趟旅行的規劃與上網準備',
+      context: '小安排好東京五日行程，希望接著處理出國上網；展開入口後沿用日期與目的地，再確認裝置、商品與回憶圖樣張。',
+      pain: '排完行程還要另外查網卡、重填日期與目的地，規格與福利也分散在不同頁面。',
+      priority: 'Must', scope: '核心流程', dependencies: ['US-01'],
+      scenarios: [
+        { id: 'AC-01', title: '沿用行程，同頁看懂方案與福利', kind: '正常', given: '小安已保存東京五日行程，手機相容性已確認，示範商品價格為 NT$299，活動設定為 3 張成功作品與 4 種風格。', when: '她從這趟行程展開上網準備入口，查看購買摘要。', then: '摘要沿用並顯示本趟日期與目的地，不要求重填；同頁分別顯示 NT$299、天期與流量等必要規格、4 種公開樣張、3 張額度、適用資格及期限。價格、3 張／4 種均標為 Mock，創作福利不混算成現金折扣。' },
+        { id: 'AC-02', title: '裝置不相容時不繼續推薦', kind: '例外', given: '已確認的手機型號不支援這張 eSIM。', when: '她嘗試以此裝置繼續購買。', then: '系統標示不相容原因，停止此推薦的結帳路徑並允許重新確認裝置；回憶圖福利不蓋過相容性提醒。' },
+        { id: 'AC-03', title: '只看樣張也能返回行程', kind: '邊界', given: '她尚未購買且已開啟風格樣張。', when: '她關閉商品面板。', then: '回到原行程位置且未建立付款或創作權益；仍可看公開樣張，但不能以此取得個人照片生成資格。' }
+      ],
+      rules: ['活動額度、風格數及售價屬示範值，正式數值由商品與活動設定提供。', '使用期限、退款影響及適用對象須在正式購買前有明確規則。', '不虛構福利市價；趣Chip 或下次可用回饋不等同本次現金折扣。'],
+      tasks: ['建立商品、相容性與活動權益摘要，提供公開風格樣張。', '從同一份商品資料顯示價格與結帳內容，變價時要求重新確認。', '分別量測入口展開、福利查看、結帳與有效付款。'],
+      questions: ['哪些商品可參與？有效期限、張數及候選風格如何定案？', '如何以相同商品與價格測試福利展示是否提高有效付款率？'],
+      metric: '福利展示付款率＝看過福利後完成有效付款的獨立旅客／看過福利的獨立旅客；與同價同商品的對照組比較，不把所有訂單視為新增。',
+      outOfScope: ['替所有商品給出最低價保證', '用回憶圖吸引不相容裝置購買', '把生成福利宣稱為無限次']
+    },
+    {
+      id: 'US-05', epic: 'purchase', audience: 'one-stop', title: '在同一趟行程查到訂單與創作福利',
+      role: '想一次準備好、集中查看準備進度的旅客',
+      want: '在同一趟行程查看訂單狀態、自己的創作資格與剩餘額度',
+      benefit: '不用在不同通知和頁面來回找，就知道準備進度及福利怎麼使用',
+      context: '小安完成東京行程的活動訂單；同行朋友是否購買，分別判斷。',
+      pain: '買完後找不到福利，或不知道權益屬於誰、能用在哪趟旅行。',
+      priority: 'Must', scope: '核心流程', dependencies: ['US-04'],
+      scenarios: [
+        { id: 'AC-01', title: '付款後在本趟查看自己的額度', kind: '正常', given: '活動訂單已完成有效付款，對應東京五日旅程與小安本人；示範活動核發 3 張成功作品額度。', when: '小安開啟該旅程的「旅行回憶」。', then: '顯示此訂單來源、本人資格、3 張剩餘額度及設定的使用期限；其他旅伴不因她付款而獲得相同權益。' },
+        { id: 'AC-02', title: '付款未確認時不提前發放', kind: '例外', given: '訂單仍顯示付款處理中，尚無有效付款確認。', when: '小安開啟旅行回憶並要求生成。', then: '顯示資格待確認，保留查詢訂單的入口；未發放可用額度，也不啟動個人作品生成。' },
+        { id: 'AC-03', title: '同一筆訂單只發放一次', kind: '邊界', given: '這筆有效訂單已核發 3 張額度。', when: '同一筆付款成功通知再次送達，且小安重新整理頁面。', then: '仍只有該訂單的一筆權益，未使用時額度保持 3 張，不增加到 6 張。' }
+      ],
+      rules: ['權益需連結訂單、旅程及使用者，不自動全團共享。', '權益以活動設定的成功作品數為上限，不承諾無限生成。', '退款與已使用額度的處理尚待確認；正式販售前須定案並揭露，不以本稿自行定義。'],
+      tasks: ['串接有效付款狀態，建立訂單對應的權益及期限。', '以訂單與活動識別避免重複核發，顯示額度使用紀錄。', '將退款狀態與權益處理預留為明確待定規則。'],
+      questions: ['代購者與實際 eSIM 使用者不同時，權益要給誰、如何指定？', '退款前已生成作品時，未用額度與已用額度如何處理？'],
+      metric: '正確核發率＝完成一次且正確核發的合資格訂單數／收到有效付款確認的合資格訂單數；另追蹤重複核發與資格查詢異常數。',
+      outOfScope: ['把一張 eSIM 視為全團不限量創作通行證', '跨旅程自動挪用權益', '尚未確認的退款或補償承諾']
+    },
+    {
+      id: 'US-06', epic: 'memory', audience: 'social', title: '用自己的照片，做成喜歡的回憶作品',
+      role: '愛分享旅行、想製作個人回憶作品的旅客',
+      want: '選擇真實照片、到訪內容與風格，生成可預覽及保存的作品',
+      benefit: '不用自己學設計，也能留下有個人特色的旅行紀錄',
+      context: '小安旅後選擇合照與淺草回憶，挑選紙感貼紙卡；朋友可以選另一種風格。',
+      pain: '照片很多，但整理成值得收藏的作品需要時間和設計能力。',
+      priority: 'Must', scope: '核心流程', dependencies: ['US-05'],
+      scenarios: [
+        { id: 'AC-01', title: '產出符合所選內容的可保存作品', kind: '正常', given: '小安的創作權益有效，剩餘 2 張；她選好照片、確認實際到訪淺草，並選擇紙感貼紙卡風格。', when: '她確認生成，系統成功提供可預覽及下載的成品。', then: '作品採用所選風格與照片主體，不加入未確認到訪的地標；額度由 2 變成 1，成品留在作品庫，可保存而不必分享。' },
+        { id: 'AC-02', title: '生成失敗不扣成功作品額度', kind: '例外', given: '小安有 2 張剩餘額度，已選好照片與風格。', when: '生成服務失敗，未交付可預覽及下載的成品。', then: '顯示失敗與重試入口，保留她的選擇，剩餘額度仍為 2 張；失敗不能記為成功作品。' },
+        { id: 'AC-03', title: '零額度仍可保存已有作品', kind: '邊界', given: '小安的剩餘額度為 0，但作品庫中已有成功作品。', when: '她要求再生成一張並查看先前作品。', then: '系統說明額度已用完，不新增生成工作或隱藏扣款；已有作品仍可預覽與下載。' }
+      ],
+      rules: ['每張成功交付的作品扣 1 張額度；同一成功結果重整或重下載不重複扣除。', '改風格重新生成屬另一張成功作品，操作前清楚提示消耗。', '只採用使用者選定照片與確認的回憶內容，規劃但未到訪的景點不可自動當作已發生。', '作品標示 AI 創作；使用者預覽後自行決定是否分享。'],
+      tasks: ['建立選照片、確認回憶、選風格、生成狀態與作品庫。', '以單次生成工作記錄結果與額度變動，避免連點重複扣除。', '提供失敗重試及成品保存，記錄生成耗時與成功成本。'],
+      questions: ['哪些風格可維持人物與地點辨識、並有合適的使用授權？', '照片大小、張數、保存期限與刪除方式如何設定？', '生成成功但使用者不滿意時，是否提供有限次修改或補發？'],
+      metric: '創作使用率＝至少成功生成一張的合資格購買者／擁有可用創作權益的購買者；另量測每張成功作品含失敗重試的平均成本。',
+      outOfScope: ['精確還原每張照片所有細節的承諾', '不限次重生成', '預設公開上傳照片或自動分享到社群']
+    },
+    {
+      id: 'US-07', epic: 'memory', audience: 'social', title: '由我決定分享作品與哪些行程',
+      role: '喜愛社群分享的旅客',
+      want: '預覽分享內容，自選是否附上公開行程，再自行分享',
+      benefit: '讓朋友欣賞並參考旅行，同時保留不想公開的細節',
+      context: '小安想分享貼紙卡和白天景點，但不公開住宿、訂單與私人備註。',
+      pain: '分享旅行很有吸引力，卻不一定想把整份共編行程都公開。',
+      priority: 'Must', scope: '核心流程', dependencies: ['US-06'],
+      scenarios: [
+        { id: 'AC-01', title: '只分享選定作品與公開景點', kind: '正常', given: '小安有一張成功作品，並只選擇淺草寺與咖啡店作為公開行程，未勾選住宿及私人備註。', when: '她檢查分享預覽，確認建立公開連結後自行複製分享。', then: '未登入的接收者只能看到所選作品與兩個公開景點；連結內容不包含住宿、私人備註、原始照片或訂單資料。' },
+        { id: 'AC-02', title: '公開連結建立失敗可重試', kind: '例外', given: '小安已選好作品與公開範圍。', when: '建立公開連結失敗。', then: '系統保留選擇並說明連結尚未建立，可重試或只下載作品；不顯示分享成功，也不自動對外發送。' },
+        { id: 'AC-03', title: '取消分享，作品仍可收藏', kind: '邊界', given: '小安正在分享預覽，尚未確認建立公開連結。', when: '她按下取消。', then: '不建立公開內容或呼叫社群發送，回到作品庫；已生成作品與下載能力保持可用。' }
+      ],
+      rules: ['公開行程預設未勾選，作品與行程範圍由本人確認。', '使用者可以只收藏作品，不以分享或好評作為已取得福利的使用條件。', '圖片與分享附文／連結分開準備，不能把圖片上的文字按鈕視為可點連結。', '下載、開啟分享、複製連結、實際造訪分別記錄，不能互相當成同一事件。'],
+      tasks: ['建立可選公開項目的預覽及最小資料分享頁。', '加入複製連結、下載與撤銷公開入口。', '分別記錄分享意圖與公開連結實際造訪。'],
+      questions: ['各目標社群平台可用的分享連結位置與圖片尺寸是什麼？', '共享旅程中的他人內容，哪些需要額外授權才能公開？'],
+      metric: '分享帶來造訪的比例＝至少帶來一次非本人有效造訪的作品數／提供過分享入口的成功作品數；不以按下分享直接推定已發文。',
+      outOfScope: ['自動發送 LINE 或社群貼文', '強制好評換取作品', '追蹤無法取得的社群曝光總數']
+    },
+    {
+      id: 'US-08', epic: 'memory', audience: 'social', title: '從朋友的回憶，開始自己的旅行',
+      role: '看見朋友旅行分享、想參考玩法的旅客',
+      want: '參考公開路線，使用自己的日期與偏好建立新行程',
+      benefit: '把旅行靈感直接變成自己的規劃起點',
+      context: '朋友看到小安的東京貼紙卡，想參考其中兩個景點，改成下個月的慢步調旅行。',
+      pain: '看見漂亮作品有興趣，卻還要重新搜尋地點與安排路線。',
+      priority: 'Should', scope: '延伸流程', dependencies: ['US-07', 'US-01'],
+      scenarios: [
+        { id: 'AC-01', title: '另存自己的新行程', kind: '正常', given: '小安的公開連結仍有效，接收者可看到兩個公開景點。', when: '接收者按「規劃我的旅行」，輸入自己的日期與偏好，檢查草案後保存。', then: '建立接收者自己的新行程，保留所選靈感來源；原作者行程不變，新行程不包含未公開內容或原作者的創作權益。' },
+        { id: 'AC-02', title: '來源撤銷後不讀取舊私人資料', kind: '例外', given: '原作者已撤銷公開連結，接收者尚未套用行程。', when: '接收者開啟該連結。', then: '顯示內容已無法提供，不顯示原作品或行程資料；可選擇從空白地圖開始自己的規劃。' },
+        { id: 'AC-03', title: '新日期不沿用過期優惠', kind: '邊界', given: '原旅程曾有 NT$279 的活動價，但活動已結束；接收者將新行程設定在下個月。', when: '接收者保存新行程並查看適用 eSIM。', then: '依新日期、裝置與目前商品條件重新顯示推薦與現價，不帶入 NT$279 舊價，也不承接原訂單的回憶圖額度。' }
+      ],
+      rules: ['作品造訪、開始規劃、新帳號、有效付款是不同指標。', '公開行程只提供靈感，套用後須重新檢查日期、時間與商品條件。', '只有接收者自己的合資格訂單才能取得本人的創作權益。'],
+      tasks: ['串接公開行程到新草案的套用路徑，隔離原作者資料。', '依新日期重新檢查景點與商品條件。', '記錄來源造訪、保存新行程及後續訂單，避免重複計數。'],
+      questions: ['接收者在哪一步需要登入，才能兼顧低門檻與保存能力？', '轉介歸因期限及排除本人、機器造訪的方式如何定義？'],
+      metric: '分享規劃轉換率＝由分享入口保存新行程的獨立接收者／開啟有效分享頁的非本人獨立接收者；另追蹤這些新行程的有效付款率。',
+      outOfScope: ['把每次分享造訪當成新增 App 使用者', '自動加入原作者的私人共編', '沿用舊旅行的促銷價格與訂單權益']
+    }
+  ]
+};
+
+</script>
+<script>
+(() => {
+  'use strict';
+  const data = window.STORY_DATA;
+  if (!data || !Array.isArray(data.stories) || !data.stories.length) {
+    document.getElementById('story-detail').innerHTML = '<div class="empty-detail"><h2>無法載入故事資料</h2><p>請確認 stories.js 與 index.html 放在同一個資料夾，或開啟單檔版 user-stories.html。</p></div>';
+    return;
+  }
+  const $ = id => document.getElementById(id);
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const state = { audience: 'all', epic: 'all', priority: 'all', query: '', current: null, scenario: 0, reading: -1 };
+  let toastTimer;
+  const epicFor = story => data.epics.find(epic => epic.id === story.epic);
+  const audienceFor = story => data.audiences.find(audience => audience.id === story.audience);
+  const findStory = id => data.stories.find(story => story.id === id);
+  const getHashId = () => { try { return decodeURIComponent(location.hash.slice(1)); } catch { return ''; } };
+  const getCurrent = () => findStory(state.current);
+  const filteredStories = () => data.stories.filter(story =>
+    (state.audience === 'all' || story.audience === state.audience) &&
+    (state.epic === 'all' || story.epic === state.epic) &&
+    (state.priority === 'all' || story.priority === state.priority) &&
+    (!state.query || (JSON.stringify(story) + audienceFor(story).title).toLocaleLowerCase().includes(state.query.toLocaleLowerCase()))
+  );
+
+  function toast(message) {
+    clearTimeout(toastTimer);
+    $('toast').textContent = message;
+    $('toast').classList.add('show');
+    toastTimer = setTimeout(() => $('toast').classList.remove('show'), 2800);
+  }
+
+  function writeHash(id, replace = false) {
+    const hash = id ? `#${id}` : '';
+    if (location.hash === hash) return;
+    try { history[replace ? 'replaceState' : 'pushState'](null, '', hash || location.pathname + location.search); }
+    catch { location.hash = hash; }
+  }
+
+  function renderAudiences() {
+    $('audience-nav').innerHTML = data.audiences.map(audience => `<button class="epic-button" data-audience="${esc(audience.id)}" aria-pressed="${state.audience === audience.id}"><span class="epic-number">${esc(audience.number)}</span><div><h2>${esc(audience.title)}</h2><p>${esc(audience.subtitle)}</p><span class="audience-count">${data.stories.filter(s => s.audience === audience.id).length} 則故事</span></div></button>`).join('');
+  }
+
+  function renderList() {
+    const stories = filteredStories();
+    $('result-count').textContent = `${stories.length} / ${data.stories.length} 則故事`;
+    $('story-list').innerHTML = stories.length ? stories.map(story => `<a class="story-item" href="#${esc(story.id)}" data-story="${esc(story.id)}" aria-current="${story.id === state.current}"><div class="story-item-top"><span class="story-id">${esc(story.id)}</span><span class="priority ${story.priority === 'Must' ? 'must' : ''}">${esc(story.priority)}</span></div><h3>${esc(story.title)}</h3><p class="story-item-bottom">${esc(story.role)} · ${story.scenarios.length} 個驗收情境</p></a>`).join('') : '<div class="empty-list">沒有符合條件的故事。<br><button class="text-button" data-reset>清除所有篩選</button></div>';
+  }
+
+  function listHtml(items) { return `<ul>${items.map(item => `<li>${esc(item)}</li>`).join('')}</ul>`; }
+  function renderDetail() {
+    const story = getCurrent();
+    if (!story) {
+      $('story-detail').removeAttribute('aria-labelledby');
+      $('story-detail').innerHTML = '<div class="empty-detail"><p class="eyebrow">NO MATCHES</p><h2>換個關鍵字，再找一則故事。</h2><p>也可以清除目標對象、旅程階段或優先級篩選，回到完整列表。</p><button class="solid-button" data-reset>顯示全部故事</button></div>';
+      return;
+    }
+    const epic = epicFor(story);
+    const stories = filteredStories();
+    const index = stories.findIndex(s => s.id === story.id);
+    $('story-detail').innerHTML = `<div class="story-surface">
+      <div class="story-top">
+        <div class="story-meta"><span class="story-id">${esc(story.id)}</span><span class="dot-separator">/</span><span>${esc(epic.title)}</span><span class="priority ${story.priority === 'Must' ? 'must' : ''}">${esc(story.priority)}</span><span>${esc(story.scope)}</span><span class="draft-tag">草案 · 待團隊確認</span></div>
+        <div class="story-title-row"><h2 id="current-story-title">${esc(story.title)}</h2><button class="outline-button" id="copy-story">複製故事 <span aria-hidden="true">↗</span></button></div>
+        <p class="audience-label">目標對象 · ${esc(audienceFor(story).title)}</p>
+        <p class="context">${esc(story.context)}</p>
+        <dl class="statement" aria-label="角色、需求與價值">
+          <div><dt>作為 <span>AS A</span></dt><dd>${esc(story.role)}</dd></div>
+          <div><dt>我希望 <span>I WANT</span></dt><dd>${esc(story.want)}</dd></div>
+          <div><dt>以便 <span>SO THAT</span></dt><dd>${esc(story.benefit)}</dd></div>
+        </dl>
+        <p class="pain-line"><strong>痛點假設</strong><span>${esc(story.pain)}</span></p>
+      </div>
+      <section class="acceptance" aria-labelledby="acceptance-title">
+        <div class="section-heading"><h3 id="acceptance-title">驗收條件 <span>Acceptance Criteria</span></h3><button class="quiet-button" id="read-scenario">逐步閱讀 →</button></div>
+        <p class="section-description">一個情境，一個可觀察的結果。選擇情境，查看完整前提與預期行為。</p>
+        <div class="scenario-tabs" role="tablist" aria-label="選擇驗收情境">${story.scenarios.map((scenario, i) => `<button role="tab" id="scenario-tab-${i}" aria-controls="scenario-panel" aria-selected="${state.scenario === i}" tabindex="${state.scenario === i ? '0' : '-1'}" data-scenario="${i}"><span>${esc(scenario.id)}</span>${esc(scenario.kind)}</button>`).join('')}</div>
+        <div id="scenario-panel" class="scenario-panel" role="tabpanel" tabindex="0"></div>
+        <div class="scenario-foot"><span>驗收規格 · 尚未執行測試</span><span class="read-status" id="read-status" role="status" aria-live="polite">Given → When → Then</span></div>
+      </section>
+      <div class="detail-accordions">
+        <details><summary><span class="summary-title">業務規則與範圍 <small>什麼必須成立</small></span></summary><div class="details-content">${listHtml(story.rules)}<p style="margin:13px 0 6px"><strong>本則不處理</strong></p>${listHtml(story.outOfScope)}</div></details>
+        <details><summary><span class="summary-title">依賴與技術任務 <small>與 User Story 分開</small></span></summary><div class="details-content"><strong>相關故事</strong><div class="dependency-list">${story.dependencies.length ? story.dependencies.map(id => `<button data-dependency="${esc(id)}">${esc(id)} ↗</button>`).join('') : '<span>無前置故事；所需資料與服務列於技術任務。</span>'}</div><strong>實作工作項目（待拆分、估算）</strong>${listHtml(story.tasks)}</div></details>
+        <details><summary><span class="summary-title">待確認問題與成效 <small>${story.questions.length} 個討論問題</small></span></summary><div class="details-content">${listHtml(story.questions)}<p style="margin-top:13px"><strong>要驗證的成效：</strong>${esc(story.metric)}</p><p style="margin-top:7px">成效指標用來驗證產品假設，與功能驗收是否符合規格分開判斷。</p></div></details>
+      </div>
+      <nav class="detail-bottom" aria-label="前後故事"><button class="text-button" data-previous ${index <= 0 ? 'disabled' : ''}>← 上一則</button><span>目前列表 ${String(index + 1).padStart(2, '0')} / ${String(stories.length).padStart(2, '0')}</span><button class="text-button" data-next ${index >= stories.length - 1 ? 'disabled' : ''}>下一則 →</button></nav>
+    </div>`;
+    $('story-detail').setAttribute('aria-labelledby', 'current-story-title');
+    renderScenario();
+  }
+
+  function renderScenario() {
+    const story = getCurrent();
+    if (!story) return;
+    const scenario = story.scenarios[state.scenario];
+    document.querySelectorAll('[data-scenario]').forEach(button => {
+      const active = Number(button.dataset.scenario) === state.scenario;
+      button.setAttribute('aria-selected', String(active));
+      button.tabIndex = active ? 0 : -1;
+    });
+    const panel = $('scenario-panel');
+    panel.setAttribute('aria-labelledby', `scenario-tab-${state.scenario}`);
+    panel.innerHTML = `<h4 class="scenario-title"><span>${esc(story.id)} / ${esc(scenario.id)}</span>${esc(scenario.title)}</h4><div class="gwt">${[['Given','前提',scenario.given],['When','行為',scenario.when],['Then','預期結果',scenario.then]].map(([key, label, content], index) => `<div class="gwt-row" data-step="${index}"><div class="gwt-key">${key}<small>${label}</small></div><p>${esc(content)}</p></div>`).join('')}</div>`;
+    renderReading();
+  }
+
+  function renderReading() {
+    document.querySelectorAll('[data-step]').forEach(row => row.classList.toggle('reading', Number(row.dataset.step) === state.reading));
+    const labels = ['Given · 已知前提', 'When · 觸發行為', 'Then · 預期結果'];
+    $('read-status').textContent = state.reading < 0 ? 'Given → When → Then' : `導讀 ${state.reading + 1} / 3 · ${labels[state.reading]}`;
+    $('read-scenario').textContent = state.reading < 0 ? '逐步閱讀 →' : state.reading === 2 ? '結束導讀 ↺' : '閱讀下一步 →';
+  }
+
+  function renderAll() { renderAudiences(); renderList(); renderDetail(); }
+  function selectStory(id, { focus = false, replace = false } = {}) {
+    if (!findStory(id)) return;
+    state.current = id; state.scenario = 0; state.reading = -1;
+    writeHash(id, replace); renderList(); renderDetail();
+    if (focus) { $('story-detail').focus({preventScroll:true}); $('story-detail').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); }
+  }
+  function applyFilters() {
+    const stories = filteredStories();
+    if (!stories.some(story => story.id === state.current)) {
+      state.current = stories[0]?.id ?? null;
+      state.scenario = 0; state.reading = -1;
+      if (state.current) writeHash(state.current, true);
+    }
+    renderAll();
+  }
+  function clearFilters(id) {
+    state.audience = 'all'; state.epic = 'all'; state.priority = 'all'; state.query = '';
+    $('story-search').value = ''; $('priority-filter').value = 'all'; $('epic-filter').value = 'all';
+    if (id && findStory(id)) state.current = id;
+    state.scenario = 0; state.reading = -1;
+    applyFilters();
+    if (id) writeHash(id);
+  }
+
+  function storyMarkdown(story) {
+    return `## ${story.id} ${story.title}\n\n目標對象：${audienceFor(story).title}\nEpic：${epicFor(story).title}\n優先級：${story.priority}（建議）｜${story.scope}\n狀態：草案，待團隊確認；尚未實作驗收\n\n**作為** ${story.role}，**我希望** ${story.want}，**以便** ${story.benefit}。\n\n情境：${story.context}\n\n痛點假設：${story.pain}\n\n### 驗收條件\n\n${story.scenarios.map(scenario => `#### ${story.id} / ${scenario.id} ${scenario.title}（${scenario.kind}）\n\n- **Given** ${scenario.given}\n- **When** ${scenario.when}\n- **Then** ${scenario.then}`).join('\n\n')}\n\n### 業務規則\n\n${story.rules.map(rule => `- ${rule}`).join('\n')}\n\n### 範圍外\n\n${story.outOfScope.map(item => `- ${item}`).join('\n')}\n\n### 依賴與技術任務\n\n相關故事：${story.dependencies.join('、') || '無前置故事'}\n\n${story.tasks.map(task => `- ${task}`).join('\n')}\n\n### 待確認\n\n${story.questions.map(question => `- ${question}`).join('\n')}\n\n成效指標（非功能驗收）：${story.metric}\n`;
+  }
+  function allMarkdown() {
+    return `# 去趣 eSIM · User Story 規格\n\n2026-09-08｜競賽提案討論稿\n\n目標對象：${data.audiences.map(a => a.title).join("、")}。依需求分群，同一人可跨組；eSIM 購買是轉換目標。\n\n${data.epics.length} 個 Epic，${data.stories.length} 則 User Story。全部優先級為建議，待團隊確認；未宣稱功能已完成或情境已驗收。每個情境採 Given／When／Then，技術任務與待決問題另列。\n\n情境中的額度、風格數等為 Mock；正式商品、權益、退款規則以團隊確認結果為準。\n\n${data.stories.map(storyMarkdown).join('\n---\n\n')}\n## 方法參考\n\n- [Agile Alliance：User Stories](https://agilealliance.org/glossary/user-stories/)\n- [Cucumber：Gherkin Reference](https://cucumber.io/docs/gherkin/reference/)\n`;
+  }
+  async function copyStory() {
+    const story = getCurrent();
+    if (!story) return;
+    const text = storyMarkdown(story);
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(text); toast(`已複製 ${story.id}，含完整驗收條件`);
+    } catch {
+      $('copy-text').value = text; $('copy-dialog').showModal(); $('copy-text').focus(); $('copy-text').select();
+    }
+  }
+  function exportMarkdown() {
+    const url = URL.createObjectURL(new Blob(['\ufeff' + allMarkdown()], {type:'text/markdown;charset=utf-8'}));
+    const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'chictrip-user-stories.md';
+    document.body.appendChild(anchor); anchor.click(); anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 3000); toast('已準備全部故事的 Markdown 下載');
+  }
+  function preparePrint() {
+    $('print-content').innerHTML = `<div class="print-cover"><h1>去趣 · User Story 規格</h1><p>2026.09.08 · ${data.audiences.length} 組 TA / ${data.epics.length} 個 Epic / ${data.stories.length} 則故事</p><p>優先級為建議，待團隊確認。需求草案，不代表功能已完成或驗收已通過。</p></div>${data.stories.map(story => `<article class="print-story"><p class="print-meta">${esc(audienceFor(story).title)} / ${esc(epicFor(story).title)} / ${esc(story.priority)}（建議） / ${esc(story.scope)}</p><h2>${esc(story.id)} ${esc(story.title)}</h2><p><strong>作為</strong> ${esc(story.role)}，<strong>我希望</strong> ${esc(story.want)}，<strong>以便</strong> ${esc(story.benefit)}。</p><p>情境：${esc(story.context)}</p><p>痛點假設：${esc(story.pain)}</p><h3>驗收條件</h3>${story.scenarios.map(s => `<section class="print-scenario"><strong>${esc(story.id)} / ${esc(s.id)} ${esc(s.title)}（${esc(s.kind)}）</strong><p><b>Given</b> ${esc(s.given)}</p><p><b>When</b> ${esc(s.when)}</p><p><b>Then</b> ${esc(s.then)}</p></section>`).join('')}<h3>業務規則</h3>${listHtml(story.rules)}<h3>範圍外</h3>${listHtml(story.outOfScope)}<h3>依賴與技術任務</h3><p>相關故事：${esc(story.dependencies.join('、') || '無前置故事')}</p>${listHtml(story.tasks)}<h3>待確認</h3>${listHtml(story.questions)}<p>成效指標（非功能驗收）：${esc(story.metric)}</p></article>`).join('')}`;
+  }
+
+  $('catalog-count').textContent = `${data.audiences.length} 組 TA / ${data.stories.length} 則故事`;
+  $('epic-filter').innerHTML = '<option value="all">全部階段</option>' + data.epics.map(epic => `<option value="${esc(epic.id)}">${esc(epic.title)}</option>`).join('');
+  $('epic-filter').addEventListener('change', event => { state.epic = event.target.value; applyFilters(); });
+  $('story-search').addEventListener('input', event => { state.query = event.target.value.trim(); applyFilters(); });
+  $('priority-filter').addEventListener('change', event => { state.priority = event.target.value; applyFilters(); });
+  $('reset-filters').addEventListener('click', () => clearFilters());
+  $('guide-button').addEventListener('click', () => $('guide-dialog').showModal());
+  $('export-button').addEventListener('click', exportMarkdown);
+  $('print-button').addEventListener('click', () => { preparePrint(); window.print(); });
+  window.addEventListener('beforeprint', preparePrint);
+  document.addEventListener('click', event => {
+    const target = event.target.closest('button,a');
+    if (!target) return;
+    if (target.hasAttribute('data-close')) $(target.dataset.close).close();
+    else if (target.hasAttribute('data-reset')) clearFilters();
+    else if (target.hasAttribute('data-audience')) { state.audience = state.audience === target.dataset.audience ? 'all' : target.dataset.audience; applyFilters(); }
+    else if (target.hasAttribute('data-story')) { event.preventDefault(); selectStory(target.dataset.story, {focus:true}); }
+    else if (target.hasAttribute('data-dependency')) { clearFilters(target.dataset.dependency); selectStory(target.dataset.dependency, {focus:true}); }
+    else if (target.hasAttribute('data-scenario')) { state.scenario = Number(target.dataset.scenario); state.reading = -1; renderScenario(); }
+    else if (target.id === 'read-scenario') { state.reading = state.reading >= 2 ? -1 : state.reading + 1; renderReading(); }
+    else if (target.id === 'copy-story') copyStory();
+    else if (target.hasAttribute('data-previous') || target.hasAttribute('data-next')) {
+      const stories = filteredStories();
+      const next = stories[stories.findIndex(story => story.id === state.current) + (target.hasAttribute('data-next') ? 1 : -1)];
+      if (next) selectStory(next.id, {focus:true});
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if (!event.target.matches('[role="tab"]')) return;
+    const count = getCurrent().scenarios.length;
+    let next = state.scenario;
+    if (event.key === 'ArrowRight') next = (next + 1) % count;
+    else if (event.key === 'ArrowLeft') next = (next - 1 + count) % count;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = count - 1;
+    else return;
+    event.preventDefault(); state.scenario = next; state.reading = -1; renderScenario(); $(`scenario-tab-${next}`).focus();
+  });
+  document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+  }));
+  const handleNavigation = () => { const id = getHashId(); if (findStory(id)) { if (!filteredStories().some(story => story.id === id)) clearFilters(id); selectStory(id, {replace:true}); } };
+  window.addEventListener('hashchange', handleNavigation);
+  window.addEventListener('popstate', handleNavigation);
+  state.current = findStory(getHashId())?.id || data.stories[0].id;
+  writeHash(state.current, true); renderAll(); preparePrint();
+  window.STORY_EXPORT = allMarkdown;
+})();
+
+</script>
+</body>
+</html>

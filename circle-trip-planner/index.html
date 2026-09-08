@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>圈一圈，出發吧 · 去趣行程原型</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="assets/tokyo-map-data.js" defer></script><script src="script.js" defer></script>
+  <link rel="stylesheet" href="mobile.css"><script src="mobile.js" defer></script>
+</head>
+<body>
+  <header class="app-header"><a class="brand" href="index.html">去趣 <span>chicTrip</span></a><span class="divider"></span><span class="header-label">我的東京旅行</span><button class="text-button" id="saved-open">已儲存的行程 <span id="saved-dot"></span></button><span class="prototype">互動原型</span></header>
+  <main>
+    <div class="page-heading"><div><p class="eyebrow">TOKYO / DAY PLANNER</p><h1>圈出想去的地方，<br class="mobile-break">剩下的，聊聊就好。</h1><p class="intro">不用一個一個排。選個範圍，說說喜歡什麼，先看一份屬於你的安排。</p></div><div class="day-pill"><span>第 1 天</span><strong>東京自由日</strong><small>示範時段 09:00–18:00</small></div></div>
+    <ol class="steps" aria-label="規劃進度"><li id="step-1" class="active"><span>1</span>圈選想逛的區域</li><li id="step-2"><span>2</span>告訴 AI 你的偏好</li><li id="step-3"><span>3</span>預覽，喜歡再套用</li></ol>
+    <div class="workspace">
+      <section class="map-panel" aria-label="東京圈選地圖">
+        <div class="map-toolbar"><div class="map-heading"><span class="live-dot"></span><strong>上野・淺草・晴空塔</strong><small>東京</small></div><div class="mode-control"><button id="draw-mode" aria-pressed="true">圈選</button><button id="view-mode" aria-pressed="false">看景點</button></div></div>
+        <div class="map" id="map">
+          <canvas id="base-map" aria-hidden="true"></canvas><canvas id="overlay" aria-hidden="true"></canvas><div id="markers"></div>
+          <div class="map-hint" id="map-hint">按住並畫一圈，圈內景點會自動選取</div>
+          <div class="area-label label-ueno">上野 UENO</div><div class="area-label label-asakusa">淺草 ASAKUSA</div><div class="area-label label-river">隅田川</div>
+          <button class="map-clear" id="clear-selection" title="清除圈選">重新圈選 ↺</button>
+          <div class="map-caption">離線地圖 · 路線為順序示意，非導航<br><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></div>
+          <aside id="place-popover" class="place-popover" hidden></aside>
+        </div>
+        <div class="quick-select"><span>試試圈這裡</span><button data-area="east">淺草・晴空塔</button><button data-area="all">上野・淺草一帶</button><button id="pick-open" class="text-button">逐點選擇 ↗</button></div>
+        <div class="selection-heading"><strong id="selection-title">從一個想去的區域開始</strong><span id="selection-count">尚未圈選</span></div>
+        <div id="selected-places" class="selected-places"><p class="selection-empty">圈選後，在這裡確認景點。也可以用上方快捷範圍開始。</p></div>
+      </section>
+      <section class="assistant-panel" aria-label="行程偏好與預覽">
+        <div class="assistant-header"><span class="ai-symbol">✳</span><div><h2>這一天，想怎麼玩？</h2><p>你的偏好，決定旅行的樣子。</p></div></div>
+        <div class="assistant-body">
+          <label class="field-label" for="preference">跟 AI 說說你的想法</label>
+          <textarea id="preference" rows="3" maxlength="240" placeholder="例如：喜歡老街和甜點，不要太趕，下午想喝咖啡。"></textarea>
+          <div class="preference-chips" aria-label="加入偏好"><button data-prompt="喜歡老街和甜點">老街與甜點</button><button data-prompt="步調悠閒，不要太趕">慢慢逛</button><button data-prompt="下午想喝咖啡">下午喝咖啡</button><button data-prompt="下雨，以室內為主">雨天室內</button></div>
+          <div class="pace-field"><label for="pace">旅行步調</label><select id="pace"><option value="relaxed">悠閒 · 最多 3 個景點</option><option value="full">充實 · 最多 4 個景點</option></select></div>
+          <p class="form-message" id="form-message" role="status">先在地圖選至少 2 個景點，再告訴我你的偏好。</p>
+          <button id="generate" class="primary" disabled><span>生成這一天的行程</span><span aria-hidden="true">→</span></button>
+          <p class="simulation-note">AI 互動模擬 · 支援老街、甜點、咖啡、室內、購物、景觀與步調偏好。</p>
+          <div id="loading" class="loading" hidden aria-live="polite"><span class="spinner"></span><div><strong>正在整理你的旅行偏好</strong><p>比對圈選景點，安排停留與休息⋯</p></div></div>
+          <div id="preview-empty" class="preview-empty"><span>YOUR DAY, YOUR WAY</span><h3>先有想法，再有行程。</h3><p>圈選＋一句話，就能看到行程草案。<br>不滿意？換個說法，再調整一次。</p></div>
+          <section id="preview" hidden aria-label="行程草案">
+            <div class="preview-heading"><div><span class="eyebrow">YOUR TOKYO DAY</span><h3 id="preview-title">為你安排的一天</h3></div><span class="draft-badge" id="draft-state">尚未套用</span></div>
+            <p class="ai-understood" id="ai-understood"></p><div id="plan-summary" class="plan-summary"></div>
+            <div id="plan-list" class="plan-list"></div>
+            <div class="refine"><span>還想改一點？</span><button data-refine="下午想喝咖啡">加個咖啡休息</button><button data-refine="下雨，以室內為主">改成雨天版</button></div>
+            <button id="apply" class="primary">套用到第 1 天 <span>✓</span></button><button id="undo" class="text-button undo" hidden>↶ 回到上一份草案</button>
+            <p class="schedule-note">停留、交通與可安排時段皆為 Mock。正式版本需查核營業時間與實際路線。</p>
+          </section>
+        </div>
+      </section>
+    </div>
+    <footer>概念驗證 / 圈選與對話式排程 <span>無須登入 · 原型不會呼叫外部 AI</span></footer>
+  </main>
+  <dialog id="pick-dialog"><div class="dialog-heading"><div><p class="eyebrow">PICK YOUR PLACES</p><h2>想去的地方，你決定。</h2></div><button data-close="pick-dialog" aria-label="關閉景點選擇">×</button></div><p class="dialog-copy">可用鍵盤或點選選取景點，至少選 2 個。</p><div id="picker"></div><button class="primary" data-close="pick-dialog">完成選擇</button></dialog>
+  <dialog id="saved-dialog"><div class="dialog-heading"><div><p class="eyebrow">MY TOKYO TRIP</p><h2>第 1 天 · 我的行程</h2></div><button data-close="saved-dialog" aria-label="關閉已儲存行程">×</button></div><div id="saved-content"></div><button class="primary" data-close="saved-dialog">繼續規劃</button></dialog>
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>
