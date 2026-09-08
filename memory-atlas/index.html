@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f9fa"><meta name="description" content="chicTrip 旅行回憶地圖原型。跟著小安，搭飛機、地鐵與香港叮叮車，回看大阪、首爾與香港的十二段回憶。">
+  <title>我的回憶地圖 · chicTrip</title><link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="styles.css">
+  <script src="vendor/maplibre-gl.js" defer></script><script src="assets/world.js" defer></script><script src="assets/map-style.js" defer></script><script src="data.js" defer></script><script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#journey-controls">跳到旅程控制</a>
+  <header class="app-header"><a class="back-link" href="../mobile-trip/index.html#memory"><img src="assets/icons/arrow-left.svg" alt=""><span>回憶作品</span></a><a class="brand" href="../mobile-trip/index.html#memory">去趣 <i>chicTrip</i><b aria-hidden="true"></b></a><button id="about" class="about-button" aria-label="關於這個回憶地圖原型">原型說明</button></header>
+  <main class="atlas-shell">
+    <div class="intro"><div><div class="overline"><span class="user-avatar">安</span> 小安的旅行收藏 <span class="mock">示範人物與旅程</span></div><h1>走過的地方，都有一點光。</h1><p>樂園、應援、小吃店。相同的城市，收藏不同的你。</p></div><div class="trip-numbers"><div><b>3</b><span>個目的地</span></div><div><b>18</b><span>枚貼紙</span></div><div><b>12</b><span>天的旅行</span></div></div></div>
+    <div class="atlas-toolbar"><nav class="city-tabs" aria-label="回憶地圖模式"><button data-city="all" aria-pressed="true"><img src="assets/icons/map.svg" alt="">總回憶</button><button data-city="osaka" aria-pressed="false"><span class="city-dot osaka"></span>大阪 <small>日本</small></button><button data-city="seoul" aria-pressed="false"><span class="city-dot seoul"></span>首爾 <small>韓國</small></button><button data-city="hongkong" aria-pressed="false"><span class="city-dot hongkong"></span>香港</button></nav><button id="dimension" class="dimension" aria-pressed="true"><img src="assets/icons/layers.svg" alt="">立體城市</button></div>
+    <div class="atlas-layout">
+      <div class="map-column">
+        <div class="map-stage">
+          <div id="map" aria-label="可拖曳縮放的 MapLibre 回憶地圖"></div>
+          <div class="map-heading"><span id="map-mode">ALL MEMORIES</span><h2 id="map-title">日本・韓國・香港</h2><p id="map-instruction">播放回憶，或點一座城市開始探索。</p></div>
+          <div id="arrival-pop" class="arrival-pop" hidden aria-hidden="true"><div id="arrival-sticker" class="sticker"></div><span>回憶已點亮</span></div>
+          <button id="recenter" class="recenter" aria-label="回到目前旅程視角"><img src="assets/icons/locate-fixed.svg" alt=""></button>
+          <div class="map-key"><span><i class="key-dot"></i>已回顧</span><span><i class="key-line"></i>旅程示意</span></div>
+          <div id="map-status" class="map-status" role="status">正在載入地圖…</div>
+          <div id="map-error" class="map-error" hidden><strong>街道底圖暫時無法載入</strong><p>目前顯示概略地圖，旅程與貼紙仍可播放。</p><button id="retry-map">重新載入底圖</button></div>
+        </div>
+        <div class="journey-player" id="journey-controls">
+          <div class="player-top"><div class="transport-now"><span id="transport-icon" class="transport-icon"><img src="assets/icons/plane.svg" alt=""></span><div><span id="journey-phase">準備出發 · 飛機</span><strong id="journey-leg">台北 → 大阪</strong></div></div><div class="player-buttons"><button id="replay" class="icon-button" aria-label="從頭重播回憶"><img src="assets/icons/rotate-ccw.svg" alt=""></button><button id="play" class="play-button"><img id="play-icon" src="assets/icons/play.svg" alt=""><span id="play-label">播放總回憶</span></button><button id="next" class="icon-button" aria-label="下一段回憶"><img src="assets/icons/skip-forward.svg" alt=""></button><button id="speed" class="speed-button" aria-label="播放速度 1 倍">1×</button></div></div>
+          <div class="timeline" id="timeline" aria-label="選擇旅程節點"></div>
+          <div class="player-footer"><span id="progress-caption" role="status">0 / 12 段回憶</span><span>交通與路線為旅程示意，非導航或即時航跡。</span></div>
+        </div>
+      </div>
+      <aside class="memory-column" aria-label="回憶與貼紙收藏">
+        <article class="moment-card" id="moment-card"><div class="moment-top"><span id="moment-date">2026.04.03 — 04.14</span><span id="moment-city">小安的亞洲旅行</span></div><div class="moment-art"><div id="moment-sticker" class="sticker" style="--sx:0%;--sy:0%"></div><span id="moment-stamp">旅程待播放</span></div><div class="moment-copy"><span id="moment-kicker">NEXT STOP · OSAKA</span><h2 id="moment-title">第一站，大阪。</h2><p id="moment-story">按下播放，看旅途變成一枚枚小小的收藏。</p><p id="moment-location" class="moment-location">台北 → 大阪</p><p id="moment-note" class="moment-note" hidden></p><div class="moment-meta"><span id="moment-transport"><img src="assets/icons/plane.svg" alt="">飛機抵達日本</span><span id="moment-with">和小宇一起</span></div></div></article>
+        <section class="sticker-collection"><div class="collection-heading"><h2>旅途的小收藏</h2><span id="collection-count">已回顧 0 / 18</span></div><p>地標之外，也收藏你的喜歡。</p><nav id="collection-tabs" class="collection-tabs" aria-label="貼紙收藏城市"></nav><div class="sticker-grid" id="sticker-grid"></div></section>
+      </aside>
+    </div>
+    <footer class="atlas-footnote"><span>MapLibre · 旅行回憶概念原型</span><span>建築依公開圖資呈現；亮燈為景點足跡示意。</span><a href="README.md" target="_blank">資料與素材說明 ↗</a></footer>
+  </main>
+  <dialog id="info-dialog" aria-labelledby="info-title"><button id="info-close" class="icon-button" aria-label="關閉說明"><img src="assets/icons/x.svg" alt=""></button><h2 id="info-title">讓旅行，慢慢累積成一張地圖。</h2><p>這裡模擬小安在 2026 年 4 月造訪大阪、首爾與香港，依序回顧 12 段旅程與 18 枚貼紙。貼紙、同行者與日期均為展示設定。LE SSERAFIM 演出情境為虛構回憶，不代表真實活動或品牌合作。</p><p>選「總回憶」播放整趟旅程；選城市可近看立體街廓。點時間軸或貼紙可直接跳到一站，再按播放繼續。</p><p>城市間以飛機、當地以地鐵、巴士、的士或電車呈現。連線只表達旅行順序，並非真實導航、列車軌道或班機航跡。</p><p>地圖使用 MapLibre 與 OpenFreeMap / OpenStreetMap 公開底圖，需要連線取得街道與建築；無法連線時提供概略地圖。裝置不支援 WebGL 時仍可回顧貼紙。</p><p>這不是定位追蹤，也不會讀取私人相簿或自動發布社群。</p></dialog>
+  <noscript>請啟用 JavaScript，才能播放回憶旅程。</noscript>
+</body>
+</html>
