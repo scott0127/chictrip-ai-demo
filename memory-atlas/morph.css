@@ -5,3 +5,6 @@
 @media(min-width:761px){.morph-controls{left:26px;right:auto;width:34%;bottom:83px}.has-morph .scene-memory{width:34%;bottom:181px}.has-morph .scene-memory h3{font-size:clamp(22px,2vw,30px)}}
 @media(max-width:760px){.map-stage{height:600px;min-height:600px}.morph-control-top button{min-height:44px}.morph-track input{height:32px}.morph-controls{bottom:79px}}
 @media(prefers-reduced-motion:reduce){.has-morph .scene-memory{transition:none}}
+.memory-scene{opacity:0;transition:opacity .9s cubic-bezier(.22,.61,.36,1);pointer-events:none}.memory-scene.scene-visible{opacity:1;pointer-events:auto}.scene-image-wrap{animation:none}.scene-image-wrap img{object-fit:contain;object-position:78% 50%;transition:none;transform:none!important}.morph-art-view .scene-souvenirs{visibility:visible}.has-morph .scene-souvenirs{opacity:calc(1 - var(--morph-progress,0)*1.2)}.has-morph .scene-memory{transition:none}.map-heading{transition:opacity .8s}.map-stage:has(.scene-visible) .map-heading{opacity:0}
+@media(max-width:760px){.scene-image-wrap img{object-position:50% 50%}.is-revealed.has-morph .scene-memory{opacity:calc(1 - var(--morph-progress,0)*2);transform:none}.morph-art-view .scene-memory{transform:none}}
+@media(prefers-reduced-motion:reduce){.memory-scene,.map-heading{transition:none}}

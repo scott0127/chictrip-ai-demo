@@ -48,6 +48,6 @@
       camera.projectionMatrix.copy(matrix.multiply(local));renderer.resetState();renderer.clearDepth();renderer.render(scene,camera);renderer.resetState();
     },onRemove(){Object.values(models).forEach(g=>g.traverse(m=>{if(m.geometry)m.geometry.dispose()}));Object.values(palette).forEach(m=>m.dispose());renderer?.dispose();}};
     map.addLayer(layer);
-    return {move(type,point,next,sampler){sampleBehind=sampler;const selected=models[type]||models['train-front'];if(active!==selected){if(active)active.visible=false;active=selected;active.visible=true;}position=point;const dx=(next[0]-point[0])*Math.cos(point[1]*Math.PI/180),dy=next[1]-point[1];if(Math.hypot(dx,dy)>1e-10)angle=Math.atan2(dy,dx);map.triggerRepaint();},hide(){if(active)active.visible=false;active=null;map.triggerRepaint();}};
+    return {opacity(value){Object.values(palette).forEach(m=>{m.transparent=true;m.opacity=value;});map.triggerRepaint();},move(type,point,next,sampler){sampleBehind=sampler;const selected=models[type]||models['train-front'];if(active!==selected){if(active)active.visible=false;active=selected;active.visible=true;}position=point;const dx=(next[0]-point[0])*Math.cos(point[1]*Math.PI/180),dy=next[1]-point[1];if(Math.hypot(dx,dy)>1e-10)angle=Math.atan2(dy,dx);map.triggerRepaint();},hide(){if(active)active.visible=false;active=null;map.triggerRepaint();}};
   };
 })();

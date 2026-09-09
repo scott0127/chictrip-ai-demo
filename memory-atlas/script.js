@@ -6,7 +6,7 @@
   const state={mode:'all',index:-1,phase:'idle',elapsed:0,playing:false,speed:1,three:true,seen:new Set(),gallery:'osaka',art:null};
   let map=null,ready=false,frame=0,last=0,routeFrame=0,arrivalTimer=0,errorTimer=0,vehicleMarker=null;
   const stopMarkers=[],cityMarkers=[];
-  let vehicleModels=null,originMarker=null;
+  let vehicleModels=null,originMarker=null,landmarks=null,pendingIndex=-1,previewOnly=false;
   const memories=window.MemoryScene;
   function hideVehicle(){if(vehicleMarker)vehicleMarker.getElement().hidden=true;vehicleModels?.hide();}
   const fc=features=>({type:'FeatureCollection',features});
@@ -21,7 +21,8 @@
     const midpoint=[(from[0]+to[0])/2,(from[1]+to[1])/2+Math.max(1.4,Math.abs(to[0]-from[0])*.15)];
     return Array.from({length:81},(_,i)=>{const t=i/80,u=1-t;return [u*u*from[0]+2*u*t*midpoint[0]+t*t*to[0],u*u*from[1]+2*u*t*midpoint[1]+t*t*to[1]];});
   }
-  const paths=stops.map((s,i)=>s.vehicle==='plane'?flightArc(legFrom(i).at,s.at):[legFrom(i).at,...(s.via||[]),s.at]);
+  function roundRoute(points){let out=points;for(let pass=0;pass<3;pass++){const next=[out[0]];for(let j=0;j<out.length-1;j++){next.push(out[j].map((v,k)=>mix(v,out[j+1][k],.25)),out[j].map((v,k)=>mix(v,out[j+1][k],.75)));}next.push(out.at(-1));out=next;}return out;}
+  const paths=stops.map((s,i)=>s.vehicle==='plane'?flightArc(legFrom(i).at,s.at):roundRoute([legFrom(i).at,...(s.via||[]),s.at]));
   const distances=paths.map(path=>{const out=[0];for(let i=1;i<path.length;i++){const cos=Math.cos(path[i][1]*Math.PI/180);out.push(out[i-1]+Math.hypot((path[i][0]-path[i-1][0])*cos,path[i][1]-path[i-1][1]));}return out;});
   function pointAlong(i,t,extend=false){const path=paths[i],lens=distances[i],d=t*lens.at(-1);let j=1;while(j<lens.length-1&&lens[j]<d)j++;const raw=(d-lens[j-1])/(lens[j]-lens[j-1]||1),u=extend?raw:clamp(raw,0,1);return {point:[mix(path[j-1][0],path[j][0],u),mix(path[j-1][1],path[j][1],u)],segment:j};}
   function artStyle(el,id){const n=id%9;el.style.setProperty('--sx',(n%3)*50+'%');el.style.setProperty('--sy',Math.floor(n/3)*50+'%');el.classList.toggle('interest-art',id>=9);}
@@ -48,7 +49,7 @@
     document.querySelectorAll('[data-city]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.city===state.mode));
     document.querySelectorAll('[data-stop]').forEach(b=>{const i=+b.dataset.stop;b.hidden=state.mode!=='all'&&stops[i].city!==state.mode;b.classList.toggle('is-seen',state.seen.has(i));b.classList.toggle('is-current',state.index===i);b.setAttribute('aria-current',state.index===i?'step':'false');});
     $('progress-caption').textContent=list.filter(x=>state.seen.has(x.id)).length+' / '+list.length+' 段回憶';
-    if(s){const from=legFrom(state.index),city=cityOf(s.city);$('transport-icon').firstElementChild.src=icon(s.vehicle);$('journey-leg').textContent=(state.phase==='arrival'||state.phase==='done')?s.name:(s.vehicle==='plane'?(state.index?cityOf(from.city).name:from.name)+' → '+city.name:from.short+' → '+s.short);$('journey-phase').textContent=state.phase==='done'?'回憶播放完成':state.phase==='arrival'?'抵達 · '+s.mode:(s.vehicle==='plane'?'跨境回憶 · ':'沿途回顧 · ')+s.mode;}
+    if(s){const from=legFrom(state.index),city=cityOf(s.city);$('transport-icon').firstElementChild.src=icon(s.vehicle);$('journey-leg').textContent=(['landmark','arrival','done'].includes(state.phase))?s.name:(s.vehicle==='plane'?(state.index?cityOf(from.city).name:from.name)+' → '+city.name:from.short+' → '+s.short);$('journey-phase').textContent=state.phase==='done'?'回憶播放完成':state.phase==='landmark'?'抵達 · 回憶亮起':state.phase==='arrival'?'抵達 · '+s.mode:(s.vehicle==='plane'?'跨境回憶 · ':'沿途回顧 · ')+s.mode;}
     renderGallery();refreshPins();$('origin-stop').hidden=state.mode!=='all';
   }
   function showMoment(s,art=s.art){
@@ -71,8 +72,7 @@
     if(!ready)return;
     const seen=[...state.seen];map.setFilter('memory-visited',['in',['get','step'],['literal',seen.length?seen:[-1]]]);
     map.getSource('memory-lights').setData(fc(seen.map(i=>feature('Point',stops[i].at,{color:cityOf(stops[i].city).color}))));
-    const polygons=seen.map(i=>{const [x,y]=stops[i].at,dx=.0015,dy=.0012;return [[[x-dx,y-dy],[x+dx,y-dy],[x+dx,y+dy],[x-dx,y+dy],[x-dx,y-dy]]];});
-    if(map.getLayer('memory-buildings'))map.setPaintProperty('memory-buildings','fill-extrusion-color',polygons.length?['case',['within',{type:'MultiPolygon',coordinates:polygons}],'#e2b44d','#c1cfce']:'#c1cfce');
+
   }
   function refreshPins(){
     if(!map)return;const regional=map.getZoom()<9.5;
@@ -80,14 +80,14 @@
     cityMarkers.forEach(({marker,city})=>{marker.getElement().hidden=!regional;const n=stops.filter(s=>s.city===city.id&&state.seen.has(s.id)).length;marker.getElement().querySelector('small').textContent=n+' / 4 段回憶';});
     stopMarkers.forEach(({marker,stop})=>{const el=marker.getElement();el.hidden=regional||(state.mode!=='all'&&stop.city!==state.mode);el.classList.toggle('is-seen',state.seen.has(stop.id));el.classList.toggle('is-current',state.index===stop.id);el.querySelector('.pin-label').hidden=state.index!==stop.id;});
   }
-  function fitRoute(i,duration=1300){
+  function fitRoute(i,duration=1700){
     if(!ready)return;const bounds=new maplibregl.LngLatBounds();paths[i].forEach(p=>bounds.extend(p));
     map.fitBounds(bounds,{padding:{top:125,bottom:70,left:65,right:65},maxZoom:stops[i].vehicle==='plane'?5.7:14.3,pitch:stops[i].vehicle==='plane'?0:(state.three?42:0),bearing:0,duration:reduced.matches?0:duration/state.speed});
     $('map-mode').textContent=stops[i].vehicle==='plane'?'FLIGHT MEMORY':'ON THE WAY';
     $('map-title').textContent=stops[i].vehicle==='plane'?((i?cityOf(stops[i-1].city).name:trip.origin.name)+' → '+cityOf(stops[i].city).name):cityOf(stops[i].city).name+'・沿途回顧';
     $('map-instruction').textContent='路線與交通工具為回憶示意';
   }
-  function closeView(s,duration=1400){
+  function closeView(s,duration=2100){
     if(ready)map.easeTo({center:s.at,zoom:s.zoom,pitch:state.three?55:0,bearing:cityOf(s.city).bearing,padding:{top:55,bottom:0,left:0,right:0},duration:reduced.matches?0:duration/state.speed});
     $('map-mode').textContent=cityOf(s.city).english+' / '+s.date;
     $('map-title').textContent=s.name;$('map-instruction').textContent='亮起的地方，收著你這次的回憶。';
@@ -107,15 +107,17 @@
     if(!vehicleModels&&s.vehicle==='plane'){const a=map.project(result.point),b=map.project(pointAlong(state.index,Math.min(1,t+.01)).point);vehicleMarker.getElement().querySelector('img').style.transform=`rotate(${Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI+45}deg)`;}
   }
   function beginLeg(i){
+    if(memories?.isOpen()){pendingIndex=i;state.phase='leave';state.elapsed=0;memories.hide(true);refreshUI();return;}
+    landmarks?.clear();vehicleModels?.opacity(1);window.MemoryMorph?.preload(window.MEMORY_SCENES[i]);
     memories?.hide();memories?.resetStay();state.index=i;state.phase='depart';state.elapsed=0;state.art=stops[i].art;state.gallery=stops[i].city;
     $('arrival-pop').hidden=true;fitRoute(i);showMoment(stops[i]);$('moment-stamp').textContent='前往這段回憶';
     if(ready){const el=vehicleMarker.getElement();el.classList.toggle('flight',stops[i].vehicle==='plane');el.querySelector('img').src=icon(stops[i].vehicle);el.querySelector('img').style.transform='';el.querySelector('small').textContent=stops[i].mode;moveVehicle(0);}
     refreshUI();
   }
   function arrive(){
-    const s=stops[state.index];state.seen.add(s.id);state.phase='arrival';state.elapsed=0;
+    const s=stops[state.index];state.seen.add(s.id);state.phase='landmark';state.elapsed=0;
     if(ready){hideVehicle();map.getSource('memory-progress').setData(empty());}
-    showMoment(s);showArrival(s);updateHighlights();refreshUI();memories?.show(s);
+    showMoment(s,state.art??s.art);updateHighlights();landmarks?.start(s);refreshUI();
     const node=$('timeline').querySelector(`[data-stop="${s.id}"]`);if(node)$('timeline').scrollTo({left:node.offsetLeft-$('timeline').offsetLeft-$('timeline').clientWidth/2+node.clientWidth/2,behavior:reduced.matches?'instant':'smooth'});
   }
   function advance(){
@@ -127,31 +129,40 @@
   function tick(now){
     if(!state.playing)return;
     const dt=Math.min(80,now-last);last=now;state.elapsed+=dt*state.speed;
-    if(state.phase==='depart'&&state.elapsed>=(reduced.matches?100:1450)){state.phase='travel';state.elapsed=0;refreshUI();}
+    if(state.phase==='leave'&&state.elapsed>=(reduced.matches?0:900*state.speed)){beginLeg(pendingIndex);}
+    else if(state.phase==='depart'&&state.elapsed>=(reduced.matches?100:1800)){state.phase='travel';state.elapsed=0;refreshUI();}
     else if(state.phase==='travel'){
-      const duration=reduced.matches?600:(stops[state.index].vehicle==='plane'?4600:3600),t=Math.min(1,state.elapsed/duration);
-      if(now-routeFrame>32||t===1){moveVehicle(t);routeFrame=now;}
-      if(t===1){state.phase='zoom';state.elapsed=0;closeView(stops[state.index]);if(ready)hideVehicle();}
-    }else if(state.phase==='zoom'&&state.elapsed>=(reduced.matches?100:1450))arrive();
-    else if(state.phase==='arrival'&&state.elapsed>=(memories?.isOpen()?12000*state.speed:(reduced.matches?1600:2300)))advance();
+      const duration=reduced.matches?600:(stops[state.index].vehicle==='plane'?5400:4800),linear=Math.min(1,state.elapsed/duration),t=linear*linear*(3-2*linear);
+      if(now-routeFrame>16||t===1){moveVehicle(t);routeFrame=now;}
+      if(t===1){state.phase='zoom';state.elapsed=0;closeView(stops[state.index]);}
+    }
+    else if(state.phase==='zoom'){
+      vehicleModels?.opacity(Math.max(0,1-state.elapsed/1800));
+      if(state.elapsed>=(reduced.matches?100:2200))arrive();
+    }else if(state.phase==='landmark'){
+      const wall=state.elapsed/state.speed;landmarks?.update(wall,reduced.matches);
+      if(wall>=(reduced.matches?800:4400)){landmarks?.settle();state.phase='arrival';state.elapsed=0;memories?.show(stops[state.index]);refreshUI();if(previewOnly){previewOnly=false;state.playing=false;refreshUI();}}
+    }
+    else if(state.phase==='arrival'&&state.elapsed>=(memories?.isOpen()?15000*state.speed:(reduced.matches?1600:2300)))advance();
     if(state.playing)frame=requestAnimationFrame(tick);
   }
   function play(){
     if(state.playing){pause();return;}
     if(state.phase==='done'){reset(false);}
+    previewOnly=false;if(memories?.isOpen())window.MemoryMorph?.resume();
     if(state.phase==='idle')beginLeg(selectedStops()[0].id);
-    else if(state.phase==='depart')fitRoute(state.index,Math.max(100,1450-state.elapsed));
-    else if(state.phase==='zoom')closeView(stops[state.index],Math.max(100,1450-state.elapsed));
+    else if(state.phase==='depart')fitRoute(state.index,Math.max(100,1800-state.elapsed));
+      else if(state.phase==='zoom')closeView(stops[state.index],Math.max(100,2200-state.elapsed));
     state.playing=true;last=performance.now();refreshUI();frame=requestAnimationFrame(tick);
   }
-  function pause(){state.playing=false;cancelAnimationFrame(frame);if(map)map.stop();refreshUI();}
+  function pause(){window.MemoryMorph?.pause();state.playing=false;cancelAnimationFrame(frame);if(map)map.stop();refreshUI();}
   function reset(start=true){
-    pause();memories?.hide();state.index=-1;state.phase='idle';state.elapsed=0;state.art=null;state.seen.clear();
+    pause();landmarks?.clear();previewOnly=false;memories?.hide(true);state.index=-1;state.phase='idle';state.elapsed=0;state.art=null;state.seen.clear();
     if(ready){hideVehicle();map.getSource('memory-progress').setData(empty());}
     updateHighlights();refreshUI();if(start)play();
   }
   function selectCity(id){
-    pause();memories?.hide();state.mode=id;state.phase='idle';state.index=-1;state.elapsed=0;$('arrival-pop').hidden=true;
+    pause();landmarks?.clear();previewOnly=false;memories?.hide(true);state.mode=id;state.phase='idle';state.index=-1;state.elapsed=0;$('arrival-pop').hidden=true;
     if(ready){hideVehicle();map.getSource('memory-progress').setData(empty());}
     if(id!=='all'){state.gallery=id;const s=stops.find(s=>s.city===id);showMoment(s);$('moment-stamp').textContent='選一站回顧';}
     $('journey-phase').textContent=id==='all'?'準備出發 · 飛機':cityOf(id).name+'・城市回憶';
@@ -159,10 +170,12 @@
     overview(id);refreshUI();
   }
   function jump(i,art=stops[i].art){
-    pause();state.index=i;state.phase='arrival';state.elapsed=0;
+    pause();memories?.hide(true);landmarks?.clear();state.index=i;state.phase='zoom';state.elapsed=0;previewOnly=true;
     if(state.mode!=='all'&&state.mode!==stops[i].city)state.mode=stops[i].city;
-    state.seen.add(i);if(ready){hideVehicle();map.getSource('memory-progress').setData(empty());}
-    showMoment(stops[i],art);closeView(stops[i]);updateHighlights();refreshUI();showArrival({...stops[i],art});memories?.show(stops[i]);if(memories?.isOpen())$('memory-scene').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'nearest'});
+    if(ready){hideVehicle();map.getSource('memory-progress').setData(empty());}
+    showMoment(stops[i],art);closeView(stops[i]);refreshUI();window.MemoryMorph?.preload(window.MEMORY_SCENES[i]);
+    state.playing=true;last=performance.now();refreshUI();frame=requestAnimationFrame(tick);
+    document.querySelector('.map-stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'nearest'});
   }
   function initMap(){
     if(!window.maplibregl){showNoMap();return;}
@@ -175,9 +188,9 @@
     map.addControl(new maplibregl.AttributionControl({compact:true}),'bottom-right');
     map.on('error',e=>{if(e.error?.message?.includes('AJAXError')||e.sourceId||/fetch|network|Failed|HTTP/i.test(e.error?.message||'')){$('map-error').hidden=false;$('map-status').textContent='概略地圖 · 街道底圖待連線';}else console.error(e.error);});
     map.once('style.load',()=>{
-      addMapLayers();addMarkers();try{vehicleModels=window.createMemoryVehicles?.(map)||null;}catch(e){console.warn('3D transport unavailable',e);$('map-status').textContent='交通模型暫不可用 · 顯示替代標記';}ready=true;overview(state.mode,0);refreshUI();updateHighlights();
+      addMapLayers();addMarkers();landmarks=window.createMemoryLandmarks(map);try{vehicleModels=window.createMemoryVehicles?.(map)||null;}catch(e){console.warn('3D transport unavailable',e);$('map-status').textContent='交通模型暫不可用 · 顯示替代標記';}ready=true;overview(state.mode,0);refreshUI();updateHighlights();
       $('map-status').textContent='MapLibre · 正在載入街道';
-      if(state.index>=0){closeView(stops[state.index],0);if(state.phase==='travel')moveVehicle(state.elapsed/4600);}
+      if(state.index>=0){closeView(stops[state.index],0);if(state.phase==='landmark')landmarks.start(stops[state.index]);if(state.phase==='travel')moveVehicle(state.elapsed/5400);}
     });
     map.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.sourceDataType==='content'){$('map-error').hidden=true;$('map-status').textContent='MapLibre · 建築與街道圖資';clearTimeout(errorTimer);}});
     map.on('zoom',refreshPins);map.on('dragstart',e=>{if(e.originalEvent&&state.playing)pause();});map.on('rotatestart',e=>{if(e.originalEvent&&state.playing)pause();});
@@ -208,9 +221,9 @@
   function showNoMap(){$('map-error').hidden=false;$('map-error').querySelector('strong').textContent='此裝置無法顯示立體地圖';$('map-error').querySelector('p').textContent='可繼續播放旅程與回顧貼紙，或換支援 WebGL 的瀏覽器。';$('map-status').textContent='貼紙回顧模式 · 地圖暫不可用';$('dimension').disabled=true;$('recenter').disabled=true;}
   document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.city)selectCity(b.dataset.city);else if(b.id==='origin-stop')showOrigin();else if(b.dataset.gallery){state.gallery=b.dataset.gallery;renderGallery();}else if(b.dataset.stop!==undefined)jump(+b.dataset.stop);else if(b.dataset.art!==undefined){const art=trip.stickers[+b.dataset.art];jump(art.stop,art.id);}});
   $('play').onclick=play;$('replay').onclick=()=>reset(true);
-  $('next').onclick=()=>{const running=state.playing;pause();const next=selectedStops().find(s=>s.id>state.index);if(next){jump(next.id);if(running)play();}else{state.phase='done';refreshUI();}};
+  $('next').onclick=()=>{const running=state.playing;pause();const next=selectedStops().find(s=>s.id>state.index);if(next){jump(next.id);previewOnly=!running;}else{state.phase='done';refreshUI();}};
   $('speed').onclick=()=>{state.speed=state.speed===1?2:1;refreshUI();};
-  $('dimension').onclick=()=>{state.three=!state.three;if(ready){map.setLayoutProperty('memory-buildings','visibility',state.three?'visible':'none');map.easeTo({pitch:state.three?(map.getZoom()>10?55:0):0,duration:reduced.matches?0:600});}refreshUI();};
+  $('dimension').onclick=()=>{state.three=!state.three;if(ready){map.setLayoutProperty('memory-buildings','visibility',state.three?'visible':'none');map.setLayoutProperty('memory-landmark-building','visibility',state.three?'visible':'none');map.easeTo({pitch:state.three?(map.getZoom()>10?55:0):0,duration:reduced.matches?0:600});}refreshUI();};
   $('recenter').onclick=()=>{if(state.index>=0){if(['depart','travel'].includes(state.phase))fitRoute(state.index);else closeView(stops[state.index]);}else overview(state.mode);};
   $('retry-map').onclick=()=>location.reload();
   $('about').onclick=()=>{pause();$('info-dialog').showModal();};$('info-close').onclick=()=>$('info-dialog').close();
