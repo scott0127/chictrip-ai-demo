@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>那晚的大阪 · chicTrip 回憶實驗室</title><link rel="stylesheet" href="styles.css"><script src="script.js" defer></script></head>
+<body>
+<header><a href="../memory-atlas/index.html">← 回到原版地圖</a><span>chicTrip <i>/</i> MEMORY LAB <b>實驗版</b></span><button id="about" aria-label="關於這個實驗">ⓘ</button></header>
+<main>
+  <section class="story" aria-labelledby="title">
+    <div class="eyebrow">JAPAN · OSAKA · 04 / 04</div>
+    <p class="date">2026 年 4 月 6 日 · 20:16</p>
+    <h1 id="title">那晚，<br>我們捨不得走。</h1>
+    <p class="intro">通天閣的燈還亮著。<br>把這一刻，再打開一次。</p>
+    <div class="location"><span class="pin"></span><span>新世界 · 通天閣<small>大阪，日本</small></span><span class="location-time">34.6525° N<br>135.5063° E</span></div>
+    <div class="view-heading"><h2>同一晚，三種目光</h2><span id="view-count">01 / 03</span></div>
+    <div class="people" role="group" aria-label="切換旅伴視角">
+      <button data-view="0" aria-pressed="true"><span class="avatar">我</span><span>我的視角<small>抬頭看見的光</small></span></button>
+      <button data-view="1" aria-pressed="false"><span class="avatar">宇</span><span>小宇的視角<small>街邊的小發現</small></span></button>
+      <button data-view="2" aria-pressed="false"><span class="avatar">晴</span><span>阿晴的視角<small>捨不得散場</small></span></button>
+    </div>
+    <p class="demo-note">示範旅伴與取景 · 可換成各自的照片</p>
+    <div class="story-actions"><button id="upload" class="text-button">＋ 換成這個視角的照片</button><input id="file" type="file" accept="image/*" hidden><button id="reset" class="text-button" hidden>還原示範</button></div>
+    <div class="chapter"><span>今日回憶</span><div><i></i><i></i><i></i><i class="current"></i></div><span>04 / 04</span></div>
+  </section>
+  <section class="experience" aria-label="可探索的通天閣照片">
+    <div class="photo-toolbar"><span id="photo-label">我的視角 · 原照片</span><button id="tilt" aria-pressed="true">空間感 開</button></div>
+    <div class="photo-space" id="space">
+      <div class="print" id="print">
+        <div class="photo-window"><img id="photo" src="assets/osaka.jpg" alt="夜晚的通天閣與新世界街道"><div class="photo-vignette"></div></div>
+        <div class="illustration"><img src="assets/poetry.png" alt="通天閣攝影詩頁 AI 插畫"></div>
+        <div class="hotspots" id="hotspots"><button class="hotspot light" data-memory="light" aria-label="打開燈亮起的那刻"><span>＋</span><b>這道光</b></button><button class="hotspot ticket" data-memory="ticket" aria-label="打開那晚的車票"><span>＋</span><b>回程之前</b></button></div>
+        <div class="photo-tag"><span>OSAKA</span><span>APR 06, 2026</span></div>
+      </div>
+    </div>
+    <div class="caption"><span id="hint">輕移游標，或拖動照片。點 ＋ 打開小回憶。</span><span id="collected">0 / 2 已打開</span></div>
+    <div class="mode-control" role="group" aria-label="照片展示模式"><button id="original" aria-pressed="true">回到當時</button><button id="poetry" aria-pressed="false">收成攝影詩頁 <span>↗</span></button></div>
+    <p class="credit">實景攝影 <a href="https://commons.wikimedia.org/wiki/File:Shinsekai_and_Tsutenkaku_at_night_2019-04-12.jpg" target="_blank" rel="noreferrer">Dick Thomas Johnson</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noreferrer">CC BY 2.0</a><span>照片取景示範，非使用者真實行程</span></p>
+  </section>
+</main>
+<dialog id="detail" aria-labelledby="dialog-title"><button class="close" id="close" aria-label="關閉小回憶">×</button><div id="detail-content"></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+</body></html>
