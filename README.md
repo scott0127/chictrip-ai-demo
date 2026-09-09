@@ -13,7 +13,7 @@
 此發布包不包含使用者上傳的私人照片、聊天紀錄、專案設定或原始討論文件。
 ## 手機版（2026-09-08）
 
-- mobile-trip/index.html：手機產品與提案入口，4 個底部標籤。
+- mobile-trip/index.html：手機產品與提案入口，保留原本 4 頁，另加「回憶地圖」第 5 個底部標籤。
 - circle-trip-planner/index.html?mobile=1：今日圈選＋自然語言排程的手機版。
 - 根目錄 index.html 在 800px 以下會自動進入手機版；?desktop=1 可保留原展示。
 - 手機版包含 8 則 User Story 與 5 張情境畫布，為直式閱讀版；既有原始簡報檔仍保留。

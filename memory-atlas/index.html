@@ -9,7 +9,7 @@
 </head>
 <body>
   <a class="skip-link" href="#journey-controls">跳到旅程控制</a>
-  <header class="app-header"><a class="back-link" href="../mobile-trip/index.html#memory"><img src="assets/icons/arrow-left.svg" alt=""><span>回憶作品</span></a><a class="brand" href="../mobile-trip/index.html#memory">去趣 <i>chicTrip</i><b aria-hidden="true"></b></a><button id="about" class="about-button" aria-label="關於這個回憶地圖原型">原型說明</button></header>
+  <header class="app-header"><a class="back-link" href="../mobile-trip/index.html#memory"><img src="assets/icons/arrow-left.svg" alt=""><span>回到主介面</span></a><a class="brand" href="../mobile-trip/index.html#memory">去趣 <i>chicTrip</i><b aria-hidden="true"></b></a><button id="about" class="about-button" aria-label="關於這個回憶地圖原型">原型說明</button></header>
   <main class="atlas-shell">
     <div class="intro"><div><div class="overline"><span class="user-avatar">安</span> 小安的旅行收藏 <span class="mock">示範人物與旅程</span></div><h1>走過的地方，都有一點光。</h1><p>樂園、應援、小吃店。相同的城市，收藏不同的你。</p></div><div class="trip-numbers"><div><b>3</b><span>個目的地</span></div><div><b>18</b><span>枚貼紙</span></div><div><b>12</b><span>天的旅行</span></div></div></div>
     <div class="atlas-toolbar"><nav class="city-tabs" aria-label="回憶地圖模式"><button data-city="all" aria-pressed="true"><img src="assets/icons/map.svg" alt="">總回憶</button><button data-city="osaka" aria-pressed="false"><span class="city-dot osaka"></span>大阪 <small>日本</small></button><button data-city="seoul" aria-pressed="false"><span class="city-dot seoul"></span>首爾 <small>韓國</small></button><button data-city="hongkong" aria-pressed="false"><span class="city-dot hongkong"></span>香港</button></nav><button id="dimension" class="dimension" aria-pressed="true"><img src="assets/icons/layers.svg" alt="">立體城市</button></div>
@@ -37,6 +37,7 @@
     </div>
     <footer class="atlas-footnote"><span>MapLibre · 旅行回憶概念原型</span><span>建築依公開圖資呈現；亮燈為景點足跡示意。</span><a href="README.md" target="_blank">資料與素材說明 ↗</a></footer>
   </main>
+  <nav class="bottom-nav" aria-label="主要功能"><a href="../mobile-trip/index.html#trip"><span class="nav-icon icon-trip" aria-hidden="true"></span>行程</a><a href="../mobile-trip/index.html#esim"><span class="nav-icon icon-sim" aria-hidden="true"></span>eSIM</a><a href="../mobile-trip/index.html#memory"><span class="nav-icon icon-memory" aria-hidden="true"></span>回憶</a><a href="../mobile-trip/index.html#proposal"><span class="nav-icon icon-doc" aria-hidden="true"></span>提案</a><a href="index.html" aria-current="page"><span class="nav-icon icon-atlas" aria-hidden="true"></span>回憶地圖</a></nav>
   <dialog id="info-dialog" aria-labelledby="info-title"><button id="info-close" class="icon-button" aria-label="關閉說明"><img src="assets/icons/x.svg" alt=""></button><h2 id="info-title">讓旅行，慢慢累積成一張地圖。</h2><p>這裡模擬小安在 2026 年 4 月造訪大阪、首爾與香港，依序回顧 12 段旅程與 18 枚貼紙。貼紙、同行者與日期均為展示設定。LE SSERAFIM 演出情境為虛構回憶，不代表真實活動或品牌合作。</p><p>選「總回憶」播放整趟旅程；選城市可近看立體街廓。點時間軸或貼紙可直接跳到一站，再按播放繼續。</p><p>城市間以飛機、當地以地鐵、巴士、的士或電車呈現。連線只表達旅行順序，並非真實導航、列車軌道或班機航跡。</p><p>地圖使用 MapLibre 與 OpenFreeMap / OpenStreetMap 公開底圖，需要連線取得街道與建築；無法連線時提供概略地圖。裝置不支援 WebGL 時仍可回顧貼紙。</p><p>這不是定位追蹤，也不會讀取私人相簿或自動發布社群。</p></dialog>
   <noscript>請啟用 JavaScript，才能播放回憶旅程。</noscript>
 </body>
