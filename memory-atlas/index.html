@@ -4,8 +4,8 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f9fa"><meta name="description" content="chicTrip 旅行回憶地圖原型。跟著小安，搭飛機、地鐵與香港叮叮車，回看大阪、首爾與香港的十二段回憶。">
   <title>我的回憶地圖 · chicTrip</title><link rel="icon" href="data:,">
-  <link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="immersion.css">
-  <script src="vendor/maplibre-gl.js" defer></script><script src="assets/world.js" defer></script><script src="assets/map-style.js" defer></script><script src="data.js" defer></script><script src="vendor/three.min.js" defer></script><script src="vehicles.js" defer></script><script src="scenes-data.js" defer></script><script src="scenes.js" defer></script><script src="script.js" defer></script>
+  <link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="immersion.css"><link rel="stylesheet" href="morph.css">
+  <script src="vendor/maplibre-gl.js" defer></script><script src="assets/world.js" defer></script><script src="assets/map-style.js" defer></script><script src="data.js" defer></script><script src="vendor/three.min.js" defer></script><script src="vehicles.js" defer></script><script src="scenes-data.js" defer></script><script src="morph.js" defer></script><script src="scenes.js" defer></script><script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#journey-controls">跳到旅程控制</a>
@@ -18,6 +18,8 @@
         <div class="map-stage">
           <section id="memory-scene" class="memory-scene" aria-label="沉浸回憶場景" hidden>
             <div id="scene-backdrop" class="scene-backdrop"></div><div class="scene-image-wrap"><img id="scene-image" alt="" draggable="false"></div><div class="scene-shade"></div>
+            <div id="memory-morph" class="memory-morph" hidden><div id="morph-paper" class="morph-paper"></div><div id="morph-wash" class="morph-wash"></div><img id="morph-photo" class="morph-photo" alt="" draggable="false"><div id="morph-art-wrap" class="morph-art-wrap"><span id="morph-sticker" role="img" aria-label="既有的環球影城 AI 回憶貼紙" hidden></span><img id="morph-art" class="morph-art" alt="" draggable="false"></div></div>
+            <div id="morph-controls" class="morph-controls" hidden><div class="morph-control-top"><span id="morph-label">原照片</span><button id="morph-replay" aria-label="重播照片到 AI 作品的轉場"><img src="assets/icons/rotate-ccw.svg" alt="">重看變化</button></div><label class="morph-track"><span>原照片</span><input id="morph-progress" type="range" min="0" max="100" value="0" aria-label="原照片到攝影詩頁的轉場進度"><span>攝影詩頁</span></label></div>
             <div class="scene-top"><div><span class="scene-eyebrow">BACK TO THAT MOMENT</span><h2 id="scene-place"></h2><p id="scene-date"></p></div><button id="scene-map"><img src="assets/icons/map.svg" alt="">看地圖</button></div>
             <div class="scene-memory"><span class="scene-chapter">有些片刻，走遠了還記得。</span><h3 id="scene-caption"></h3><p id="scene-note"></p><button id="scene-stay">停留在這一刻</button></div>
             <div id="scene-souvenirs" class="scene-souvenirs" aria-label="打開這一站的收藏"></div>
