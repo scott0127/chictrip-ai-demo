@@ -5,7 +5,9 @@
   const slider=$('morph-progress'),replay=$('morph-replay'),label=$('morph-label');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)'),cache=new Map();
   let version=0,raf=0,progress=0,ready=false,active=false,source=null,isSticker=false,bounds={w:0,h:0},motion=null;
-  const clamp=x=>Math.min(1,Math.max(0,x)),ease=x=>x*x*(3-2*x),mix=(a,b,t)=>a+(b-a)*t;
+  const clamp=x=>Math.min(1,Math.max(0,x)),mix=(a,b,t)=>a+(b-a)*t;
+  // Critically damped: starts at rest and settles without overshoot.
+  const settle=t=>(1-(1+8*t)*Math.exp(-8*t))/(1-9*Math.exp(-8));
   function load(src){if(!cache.has(src))cache.set(src,new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>{cache.delete(src);reject(Error(src));};img.src=src;}));return cache.get(src);}
   let geometry=new WeakMap();
   function rect(el,x,y,w,h){let base=geometry.get(el);if(!base){base={w:Math.max(1,w),h:Math.max(1,h)};geometry.set(el,base);el.style.width=base.w+'px';el.style.height=base.h+'px';}el.style.transformOrigin='0 0';el.style.transform=`translate3d(${x}px,${y}px,0) scale(${w/base.w},${h/base.h})`;}
@@ -18,7 +20,7 @@
     const endScale=Math.min(pw/source.naturalWidth,ph/2/source.naturalHeight),ew=source.naturalWidth*endScale,eh=source.naturalHeight*endScale;
     rect(paper,px,py,pw,ph);rect(wash,px,py,pw,mix(ph,ph/2,p));
     rect(photo,px+(pw-mix(sw,ew,p))/2,mix(py+(ph-sh)/2,py+(ph/2-eh)/2,p),mix(sw,ew,p),mix(sh,eh,p));
-    rect($('morph-art-wrap'),px,py+ph/2+8*(1-p),pw,ph/2);
+    rect($('morph-art-wrap'),px,py+ph/2,pw,ph/2);
     if(isSticker){const size=ph*.34;art.hidden=true;const tile=$('morph-sticker');tile.hidden=false;tile.style.width=size+'px';tile.style.height=size+'px';tile.style.transform=`translate(${(pw-size)/2}px,${(ph/2-size)/2}px)`;}else{art.hidden=false;$('morph-sticker').hidden=true;art.style.width='100%';art.style.height='100%';art.style.transform='none';}
     paper.style.opacity=1;wash.style.opacity=1;
     $('morph-art-wrap').style.opacity=clamp((progress-.12)/.88);art.style.filter='none';
@@ -29,11 +31,11 @@
   }
   function stop(){cancelAnimationFrame(raf);raf=0;}
   function tick(now){if(!active||document.hidden||!motion)return;if(motion.last)motion.elapsed+=Math.min(now-motion.last,80);motion.last=now;
-    const t=clamp((motion.elapsed-motion.hold)/motion.duration);draw(mix(motion.from,motion.to,1-Math.pow(1-t,3)));
-    if(t<1)raf=requestAnimationFrame(tick);else if(motion.to===0){motion={from:0,to:1,elapsed:0,last:0,hold:380,duration:440};raf=requestAnimationFrame(tick);}else{raf=0;motion=null;}
+    const t=clamp((motion.elapsed-motion.hold)/motion.duration);draw(mix(motion.from,motion.to,settle(t)));
+    if(t<1)raf=requestAnimationFrame(tick);else if(motion.to===0){motion={from:0,to:1,elapsed:0,last:0,hold:250,duration:420};raf=requestAnimationFrame(tick);}else{raf=0;motion=null;}
   }
   function play(){stop();if(!ready)return;if(reduced.matches){draw(1);return;}
-    motion=progress>.01?{from:progress,to:0,elapsed:0,last:0,hold:0,duration:280}:{from:0,to:1,elapsed:0,last:0,hold:1050,duration:440};
+    motion=progress>.01?{from:progress,to:0,elapsed:0,last:0,hold:0,duration:280}:{from:0,to:1,elapsed:0,last:0,hold:1050,duration:420};
     raf=requestAnimationFrame(tick);
   }
   function hide(){version++;stop();motion=null;active=false;ready=false;stage.hidden=true;root.classList.remove('has-morph','morph-art-view');root.style.setProperty('--morph-progress',0);$('morph-controls').hidden=true;root.querySelector('.scene-memory').inert=false;$('scene-souvenirs').inert=false;}
