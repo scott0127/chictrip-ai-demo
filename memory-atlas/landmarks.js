@@ -32,7 +32,7 @@ window.createMemoryLandmarks = function(map) {
   return {
     start(stop){current=stop;found=false;lastTry=-1000;lastPaint=-1000;map.getSource('memory-arrival-point').setData(data([{type:'Feature',geometry:{type:'Point',coordinates:stop.at},properties:{}}]));resolve();},
     update(ms,reduced=false){if(!current||ms-lastPaint<32)return;lastPaint=ms;if(!found&&ms-lastTry>650){resolve();lastTry=ms;}
-      const wave=reduced?1:(1+Math.cos(Math.min(ms,4200)/1400*Math.PI*2))/2;
+      const wave=reduced?1:(1+Math.cos(Math.min(ms,1800)/600*Math.PI*2))/2;
       map.setPaintProperty('memory-landmark-building','fill-extrusion-opacity',.30+.68*wave);
       map.setPaintProperty('memory-landmark-building','fill-extrusion-color',`rgb(${218+Math.round(37*wave)},${155+Math.round(79*wave)},${40+Math.round(126*wave)})`);
       map.setPaintProperty('memory-arrival-ring','circle-radius',18+wave*24);

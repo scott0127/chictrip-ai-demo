@@ -80,14 +80,14 @@
     cityMarkers.forEach(({marker,city})=>{marker.getElement().hidden=!regional;const n=stops.filter(s=>s.city===city.id&&state.seen.has(s.id)).length;marker.getElement().querySelector('small').textContent=n+' / 4 段回憶';});
     stopMarkers.forEach(({marker,stop})=>{const el=marker.getElement();el.hidden=regional||(state.mode!=='all'&&stop.city!==state.mode);el.classList.toggle('is-seen',state.seen.has(stop.id));el.classList.toggle('is-current',state.index===stop.id);el.querySelector('.pin-label').hidden=state.index!==stop.id;});
   }
-  function fitRoute(i,duration=1700){
+  function fitRoute(i,duration=900){
     if(!ready)return;const bounds=new maplibregl.LngLatBounds();paths[i].forEach(p=>bounds.extend(p));
     map.fitBounds(bounds,{padding:{top:125,bottom:70,left:65,right:65},maxZoom:stops[i].vehicle==='plane'?5.7:14.3,pitch:stops[i].vehicle==='plane'?0:(state.three?42:0),bearing:0,duration:reduced.matches?0:duration/state.speed});
     $('map-mode').textContent=stops[i].vehicle==='plane'?'FLIGHT MEMORY':'ON THE WAY';
     $('map-title').textContent=stops[i].vehicle==='plane'?((i?cityOf(stops[i-1].city).name:trip.origin.name)+' → '+cityOf(stops[i].city).name):cityOf(stops[i].city).name+'・沿途回顧';
     $('map-instruction').textContent='路線與交通工具為回憶示意';
   }
-  function closeView(s,duration=2100){
+  function closeView(s,duration=850){
     if(ready)map.easeTo({center:s.at,zoom:s.zoom,pitch:state.three?55:0,bearing:cityOf(s.city).bearing,padding:{top:55,bottom:0,left:0,right:0},duration:reduced.matches?0:duration/state.speed});
     $('map-mode').textContent=cityOf(s.city).english+' / '+s.date;
     $('map-title').textContent=s.name;$('map-instruction').textContent='亮起的地方，收著你這次的回憶。';
@@ -102,7 +102,7 @@
   }
   function moveVehicle(t){
     if(!ready||state.index<0)return;const s=stops[state.index],route=paths[state.index],result=pointAlong(state.index,t);
-    if(vehicleModels){vehicleMarker.getElement().hidden=true;const index=state.index;vehicleModels.move(s.vehicle,result.point,pointAlong(index,t+.015,true).point,meters=>pointAlong(index,t-meters/(distances[index].at(-1)*111320),true).point);}else{vehicleMarker.setLngLat(result.point);vehicleMarker.getElement().hidden=false;}
+    if(vehicleModels){vehicleMarker.getElement().hidden=true;const index=state.index;vehicleModels.move(s.vehicle,result.point,pointAlong(index,t+.015,true).point,meters=>pointAlong(index,t-meters/(distances[index].at(-1)*111320),true).point,{city:s.city});}else{vehicleMarker.setLngLat(result.point);vehicleMarker.getElement().hidden=false;}
     map.getSource('memory-progress').setData(fc([feature('LineString',[...route.slice(0,result.segment),result.point],{color:cityOf(s.city).color})]));
     if(!vehicleModels&&s.vehicle==='plane'){const a=map.project(result.point),b=map.project(pointAlong(state.index,Math.min(1,t+.01)).point);vehicleMarker.getElement().querySelector('img').style.transform=`rotate(${Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI+45}deg)`;}
   }
@@ -129,21 +129,21 @@
   function tick(now){
     if(!state.playing)return;
     const dt=Math.min(80,now-last);last=now;state.elapsed+=dt*state.speed;
-    if(state.phase==='leave'&&state.elapsed>=(reduced.matches?0:900*state.speed)){beginLeg(pendingIndex);}
-    else if(state.phase==='depart'&&state.elapsed>=(reduced.matches?100:1800)){state.phase='travel';state.elapsed=0;refreshUI();}
+    if(state.phase==='leave'&&state.elapsed>=(reduced.matches?0:240*state.speed)){beginLeg(pendingIndex);}
+    else if(state.phase==='depart'&&state.elapsed>=(reduced.matches?100:980)){state.phase='travel';state.elapsed=0;refreshUI();}
     else if(state.phase==='travel'){
       const duration=reduced.matches?600:(stops[state.index].vehicle==='plane'?5400:4800),linear=Math.min(1,state.elapsed/duration),t=linear*linear*(3-2*linear);
       if(now-routeFrame>16||t===1){moveVehicle(t);routeFrame=now;}
       if(t===1){state.phase='zoom';state.elapsed=0;closeView(stops[state.index]);}
     }
     else if(state.phase==='zoom'){
-      vehicleModels?.opacity(Math.max(0,1-state.elapsed/1800));
-      if(state.elapsed>=(reduced.matches?100:2200))arrive();
+      vehicleModels?.opacity(Math.max(0,1-state.elapsed/700));
+      if(state.elapsed>=(reduced.matches?100:900))arrive();
     }else if(state.phase==='landmark'){
       const wall=state.elapsed/state.speed;landmarks?.update(wall,reduced.matches);
-      if(wall>=(reduced.matches?800:4400)){landmarks?.settle();state.phase='arrival';state.elapsed=0;memories?.show(stops[state.index]);refreshUI();if(previewOnly){previewOnly=false;state.playing=false;refreshUI();}}
+      if(wall>=(reduced.matches?500:1900)){landmarks?.settle();state.phase='arrival';state.elapsed=0;if(ready){const point=map.project(stops[state.index].at);memories?.setOrigin(point.x,point.y);}memories?.show(stops[state.index]);refreshUI();if(previewOnly){previewOnly=false;state.playing=false;refreshUI();}}
     }
-    else if(state.phase==='arrival'&&state.elapsed>=(memories?.isOpen()?15000*state.speed:(reduced.matches?1600:2300)))advance();
+    else if(state.phase==='arrival'&&state.elapsed>=(memories?.isOpen()?4800*state.speed:(reduced.matches?1600:2300)))advance();
     if(state.playing)frame=requestAnimationFrame(tick);
   }
   function play(){
@@ -151,8 +151,8 @@
     if(state.phase==='done'){reset(false);}
     previewOnly=false;if(memories?.isOpen())window.MemoryMorph?.resume();
     if(state.phase==='idle')beginLeg(selectedStops()[0].id);
-    else if(state.phase==='depart')fitRoute(state.index,Math.max(100,1800-state.elapsed));
-      else if(state.phase==='zoom')closeView(stops[state.index],Math.max(100,2200-state.elapsed));
+    else if(state.phase==='depart')fitRoute(state.index,Math.max(100,980-state.elapsed));
+      else if(state.phase==='zoom')closeView(stops[state.index],Math.max(100,900-state.elapsed));
     state.playing=true;last=performance.now();refreshUI();frame=requestAnimationFrame(tick);
   }
   function pause(){window.MemoryMorph?.pause();state.playing=false;cancelAnimationFrame(frame);if(map)map.stop();refreshUI();}
